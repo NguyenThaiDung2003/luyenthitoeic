@@ -5,14 +5,18 @@ import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { JwtAuthGuard, RolesGuard } from './guards.js';
 
+const MIN_SECRET_LENGTH = 32;
+
 @Module({
   imports: [
     JwtModule.registerAsync({
       global: true,
       useFactory: () => {
         const secret = process.env.JWT_SECRET;
-        // Không khởi động với khóa thiếu hoặc còn là giá trị mẫu
-        if (!secret || secret === 'change-me') throw new Error('JWT_SECRET chưa được cấu hình');
+        // Không khởi động với khóa thiếu hoặc yếu, chuỗi mẫu cũng bị chặn vì quá ngắn
+        if (!secret || secret.length < MIN_SECRET_LENGTH) {
+          throw new Error(`JWT_SECRET phải có ít nhất ${MIN_SECRET_LENGTH} ký tự`);
+        }
         return {
           secret,
           signOptions: { expiresIn: Number(process.env.JWT_EXPIRES_IN_SECONDS ?? 7200) },

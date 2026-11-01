@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { AUTOSAVE_INTERVAL_MS, ExamRoom, formatTime, type Paper } from "./exam-room";
+import { AUTOSAVE_INTERVAL_MS, ExamRoom, formatTime, type Paper, SESSION_REFRESH_INTERVAL_MS } from "./exam-room";
 
 const replace = vi.fn();
 vi.mock("next/navigation", () => ({ useRouter: () => ({ replace }) }));
@@ -94,6 +94,15 @@ describe("ExamRoom", () => {
 
     expect(callsTo(fetchMock, "/answers")).toHaveLength(2);
     expect(screen.getByRole("status").textContent).toContain("Đã lưu");
+  });
+
+  it("gia hạn phiên trong lúc làm bài", async () => {
+    const fetchMock = mockFetch(() => json({ remainingSeconds: 590 }));
+    render(<ExamRoom paper={{ ...paper, remainingSeconds: 7200 }} />);
+
+    await advance(SESSION_REFRESH_INTERVAL_MS);
+
+    expect(callsTo(fetchMock, "/auth/refresh")).toHaveLength(1);
   });
 
   it("đồng hồ đếm theo số giây máy chủ trả về", async () => {

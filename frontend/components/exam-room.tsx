@@ -8,6 +8,7 @@ import { Icon } from "./icon";
 import { ErrorBanner, primaryButtonClass, secondaryButtonClass } from "./ui";
 
 export const AUTOSAVE_INTERVAL_MS = 5000;
+export const SESSION_REFRESH_INTERVAL_MS = 15 * 60 * 1000;
 
 export interface PaperQuestion {
   id: string;
@@ -143,6 +144,18 @@ export function ExamRoom({ paper }: { paper: Paper }) {
     }, AUTOSAVE_INTERVAL_MS);
     return () => clearInterval(timer);
   }, [flush, submit]);
+
+  // Gia hạn phiên trong lúc làm bài, nếu không đề dài hơn thời hạn token sẽ không lưu được
+  useEffect(() => {
+    const timer = setInterval(() => {
+      api("/auth/refresh", { method: "POST" }).catch((caught: unknown) => {
+        if (caught instanceof ApiError && caught.status === 401) {
+          setError("Phiên đăng nhập đã hết hạn. Hãy đăng nhập lại ở tab khác rồi quay lại để lưu bài.");
+        }
+      });
+    }, SESSION_REFRESH_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, []);
 
   // Lưu ngay khi học viên chuyển tab, giảm rủi ro mất bài khi đóng trình duyệt
   useEffect(() => {

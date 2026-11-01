@@ -58,8 +58,9 @@ erDiagram
 - **Một lượt đang làm:** chỉ mục duy nhất một phần trên (`user_id`, `exam_id`) với điều kiện `status = 'IN_PROGRESS'`, tránh tạo trùng khi bấm nhanh.
 - **Không tin đồng hồ trình duyệt:** `expires_at` tính ở máy chủ; khi bắt đầu lượt, trình duyệt chỉ nhận số giây còn lại để hiển thị.
 - **Hết giờ:** không nhận lưu thêm. Lượt quá hạn được chấm theo câu đã lưu khi có yêu cầu kế tiếp liên quan đến lượt đó, và đánh dấu `auto_submitted`.
-- **Nộp một lần:** chuyển trạng thái bằng câu lệnh có điều kiện `status = 'IN_PROGRESS'`; yêu cầu thứ hai không cập nhật được dòng nào nên nhận 409.
-- **Không lộ đáp án:** đề thi trả cho học viên đi qua một hàm ánh xạ chỉ chọn trường được phép, không loại trường sau khi lấy.
+- **Nộp một lần:** lưu nháp và chấm bài đều khóa dòng `attempts` bằng `SELECT ... FOR UPDATE` trong giao dịch. Yêu cầu nộp thứ hai chờ khóa, thấy bài đã nộp và nhận 409.
+- **Không lộ đáp án:** truy vấn đề thi cho học viên dùng `select` liệt kê từng trường được phép, nên đáp án không được lấy ra khỏi CSDL. Chỉ endpoint kết quả của lượt đã nộp mới đọc đáp án.
+- **Phiên làm bài:** phòng thi gọi `POST /auth/refresh` định kỳ, vì đề có thể dài hơn thời hạn token.
 - **Điểm ước lượng:** `max(5, round(495 × đúng / tổng ÷ 5) × 5)`. Đây là quy đổi tuyến tính, không phải bảng điểm chính thức của ETS.
 
 ## 7. Module backend

@@ -31,6 +31,12 @@ async function main() {
   if (!email || !password) {
     throw new Error('Thiếu SEED_TEACHER_EMAIL hoặc SEED_TEACHER_PASSWORD');
   }
+  if (
+    process.env.NODE_ENV === 'production' &&
+    (password === 'change-me-teacher' || password.length < 12)
+  ) {
+    throw new Error('SEED_TEACHER_PASSWORD phải có ít nhất 12 ký tự và không phải giá trị mẫu');
+  }
   // Giữ nguyên mật khẩu nếu tài khoản đã tồn tại
   await prisma.user.upsert({
     where: { email },

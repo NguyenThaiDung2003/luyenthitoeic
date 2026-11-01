@@ -46,6 +46,22 @@ export interface Question {
   passage: { id: string; title: string } | null;
 }
 
+export interface ExamSummary {
+  id: string;
+  title: string;
+  description: string | null;
+  status: "DRAFT" | "PUBLISHED";
+  durationMinutes: number;
+  questionCount: number;
+  parts: Part[];
+  attemptCount?: number;
+  latestAttempt: {
+    id: string;
+    status: "IN_PROGRESS" | "SUBMITTED";
+    estimatedScore: number | null;
+  } | null;
+}
+
 export interface Page<T> {
   items: T[];
   total: number;

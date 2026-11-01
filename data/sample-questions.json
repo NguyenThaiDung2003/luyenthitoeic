@@ -1,0 +1,143 @@
+[
+  {
+    "part": "PART_5",
+    "question": "The marketing team _____ the new campaign before the director returned from Singapore.",
+    "options": ["finish", "had finished", "will finish", "is finishing"],
+    "correct": "B",
+    "topic": "Thì của động từ",
+    "difficulty": "MEDIUM",
+    "explanation": "Hành động xảy ra trước một hành động khác trong quá khứ (returned) nên dùng quá khứ hoàn thành.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0"
+  },
+  {
+    "part": "PART_5",
+    "question": "Ms. Tran asked her assistant to send the signed contract to _____ office by Friday.",
+    "options": ["she", "hers", "her", "herself"],
+    "correct": "C",
+    "topic": "Đại từ",
+    "difficulty": "EASY",
+    "explanation": "Trước danh từ office cần tính từ sở hữu, nên chọn her.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0"
+  },
+  {
+    "part": "PART_5",
+    "question": "The new software allows employees to submit expense reports more _____ than before.",
+    "options": ["efficient", "efficiency", "efficiently", "efficiencies"],
+    "correct": "C",
+    "topic": "Từ loại",
+    "difficulty": "EASY",
+    "explanation": "Cần trạng từ bổ nghĩa cho động từ submit, nên chọn efficiently.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0"
+  },
+  {
+    "part": "PART_5",
+    "question": "_____ the heavy rain, the outdoor product launch attracted more than two hundred guests.",
+    "options": ["Although", "Despite", "Because", "Unless"],
+    "correct": "B",
+    "topic": "Liên từ",
+    "difficulty": "MEDIUM",
+    "explanation": "Sau chỗ trống là cụm danh từ the heavy rain nên dùng giới từ Despite, không dùng liên từ Although.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0"
+  },
+  {
+    "part": "PART_5",
+    "question": "All applications must be received _____ 5:00 P.M. on March 15 to be considered.",
+    "options": ["by", "at", "during", "among"],
+    "correct": "A",
+    "topic": "Giới từ",
+    "difficulty": "EASY",
+    "explanation": "By chỉ thời hạn cuối cùng phải hoàn thành việc gì đó.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0"
+  },
+  {
+    "part": "PART_5",
+    "question": "The consultant _____ recommendations were adopted by the board will visit the factory next week.",
+    "options": ["who", "whose", "whom", "which"],
+    "correct": "B",
+    "topic": "Mệnh đề quan hệ",
+    "difficulty": "HARD",
+    "explanation": "Chỗ trống đứng trước danh từ recommendations và chỉ sự sở hữu của consultant, nên dùng whose.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0"
+  },
+  {
+    "part": "PART_6",
+    "question": "Choose the word that best completes blank [1].",
+    "options": ["relocation", "reduction", "resignation", "reservation"],
+    "correct": "A",
+    "topic": "Từ vựng",
+    "difficulty": "MEDIUM",
+    "explanation": "Đoạn văn nói về việc chuyển văn phòng sang địa chỉ mới, nên chọn relocation.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0",
+    "passage": {
+      "title": "Notice: Office Move",
+      "content": "To all staff,\n\nThe [1] of our Hanoi office to the Lotus Tower will take place on June 3. Please pack your personal items by May 30. Moving crews will transport all equipment over the weekend, and the new office will open on Monday morning.\n\nFacilities Department"
+    }
+  },
+  {
+    "part": "PART_7",
+    "question": "What is the main purpose of the email?",
+    "options": [
+      "To confirm a hotel booking",
+      "To explain a delay in a delivery",
+      "To request a product catalog",
+      "To cancel a membership"
+    ],
+    "correct": "B",
+    "topic": "Câu hỏi chi tiết",
+    "difficulty": "EASY",
+    "explanation": "Câu đầu tiên của email thông báo đơn hàng bị chậm do cảng đóng cửa vì bão.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0",
+    "passage": {
+      "title": "Email: Order 4471",
+      "content": "From: Linh Pham, Customer Service\nTo: Mr. David Ross\nSubject: Order 4471\n\nDear Mr. Ross,\n\nWe regret to inform you that your order of 40 office chairs will arrive later than planned because the port in Hai Phong closed for three days during the recent storm. The shipment should now reach your warehouse on August 12 instead of August 7.\n\nTo apologize for the inconvenience, we will refund the shipping fee. If the new date does not suit you, please call me at extension 215 and I will arrange a partial delivery from our Da Nang warehouse.\n\nSincerely,\nLinh Pham"
+    }
+  },
+  {
+    "part": "PART_7",
+    "question": "What is offered to Mr. Ross as compensation?",
+    "options": [
+      "A discount on his next order",
+      "Free extended warranty",
+      "A refund of the shipping fee",
+      "Two additional office chairs"
+    ],
+    "correct": "C",
+    "topic": "Câu hỏi chi tiết",
+    "difficulty": "MEDIUM",
+    "explanation": "Email viết rõ: we will refund the shipping fee.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0",
+    "passage": {
+      "title": "Email: Order 4471",
+      "content": "From: Linh Pham, Customer Service\nTo: Mr. David Ross\nSubject: Order 4471\n\nDear Mr. Ross,\n\nWe regret to inform you that your order of 40 office chairs will arrive later than planned because the port in Hai Phong closed for three days during the recent storm. The shipment should now reach your warehouse on August 12 instead of August 7.\n\nTo apologize for the inconvenience, we will refund the shipping fee. If the new date does not suit you, please call me at extension 215 and I will arrange a partial delivery from our Da Nang warehouse.\n\nSincerely,\nLinh Pham"
+    }
+  },
+  {
+    "part": "PART_7",
+    "question": "What can be inferred about the company?",
+    "options": [
+      "It has more than one warehouse",
+      "It recently moved to Hai Phong",
+      "It manufactures its own chairs",
+      "It plans to close its Da Nang office"
+    ],
+    "correct": "A",
+    "topic": "Câu hỏi suy luận",
+    "difficulty": "HARD",
+    "explanation": "Email nhắc tới our Da Nang warehouse như một nguồn giao hàng thay thế, nên có thể suy ra công ty có nhiều hơn một kho.",
+    "source": "Tự biên soạn",
+    "license": "CC0-1.0",
+    "passage": {
+      "title": "Email: Order 4471",
+      "content": "From: Linh Pham, Customer Service\nTo: Mr. David Ross\nSubject: Order 4471\n\nDear Mr. Ross,\n\nWe regret to inform you that your order of 40 office chairs will arrive later than planned because the port in Hai Phong closed for three days during the recent storm. The shipment should now reach your warehouse on August 12 instead of August 7.\n\nTo apologize for the inconvenience, we will refund the shipping fee. If the new date does not suit you, please call me at extension 215 and I will arrange a partial delivery from our Da Nang warehouse.\n\nSincerely,\nLinh Pham"
+    }
+  }
+]

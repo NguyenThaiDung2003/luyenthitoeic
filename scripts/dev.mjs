@@ -34,6 +34,7 @@ for (const app of ['backend', 'frontend']) {
 run('docker compose up -d --wait');
 run('npx prisma migrate deploy', join(root, 'backend'));
 run('npm run seed', join(root, 'backend'));
+run('npm run import:questions -- ../data/sample-questions.json', join(root, 'backend'));
 
 const children = ['backend', 'frontend'].map((app) =>
   spawn('npm run dev', { cwd: join(root, app), stdio: 'inherit', shell: true }),

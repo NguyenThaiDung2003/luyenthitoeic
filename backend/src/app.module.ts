@@ -4,12 +4,14 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module.js';
 import { HealthController } from './health/health.controller.js';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { QuestionsModule } from './questions/questions.module.js';
 import { TopicsController } from './topics/topics.controller.js';
 
 @Module({
   imports: [
     PrismaModule,
     AuthModule,
+    QuestionsModule,
     ThrottlerModule.forRoot([
       { ttl: 60_000, limit: () => Number(process.env.GLOBAL_RATE_LIMIT ?? 300) },
     ]),

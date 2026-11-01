@@ -135,6 +135,54 @@ export interface TrendPoint {
   accuracy: number;
 }
 
+export interface Recommendation {
+  topicId: string;
+  name: string;
+  accuracy: number;
+  correct: number;
+  total: number;
+  targetDifficulty: Difficulty;
+  plannedQuestions: number;
+  unseenQuestions: number;
+}
+
+export interface TeacherOverview {
+  students: number;
+  activeStudents: number;
+  submittedAttempts: number;
+  averageScore: number | null;
+  accuracy: number | null;
+}
+
+export interface TeacherTopicStat {
+  topicId: string;
+  name: string;
+  total: number;
+  correct: number;
+  accuracy: number;
+  averageScore: number;
+  students: number;
+}
+
+export interface HardestQuestion {
+  questionId: string;
+  content: string;
+  part: Part;
+  topic: string;
+  total: number;
+  wrong: number;
+  wrongRate: number;
+}
+
+export interface StudentAtRisk {
+  userId: string;
+  fullName: string;
+  email: string;
+  attempts: number;
+  accuracy: number;
+  lastSubmittedAt: string;
+}
+
 export interface Page<T> {
   items: T[];
   total: number;

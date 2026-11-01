@@ -191,6 +191,17 @@ describe('AI giải thích đáp án (e2e)', () => {
     expect(await context.prisma.aiExplanation.count()).toBe(0);
   });
 
+  it('Google hết hạn mức thì báo rõ và hoàn lượt', async () => {
+    fetchMock.mockImplementation(async () => new Response('', { status: 429 }));
+    const attemptId = await takeExam();
+
+    const response = await explain(attemptId).expect(503);
+
+    expect(response.body.message).toContain('hết hạn mức');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(await usage()).toBe(0);
+  });
+
   it('đầu ra sai định dạng được thử lại một lần', async () => {
     fetchMock.mockImplementationOnce(async () => reply({ whyCorrect: 'thiếu' }));
     const attemptId = await takeExam();

@@ -79,6 +79,14 @@ describe('GeminiClient', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('hết hạn mức thì báo riêng và không thử lại', async () => {
+    const fetchMock = vi.fn(async () => new Response('', { status: 429 }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    await expect(client.generateJson('x', {})).rejects.toMatchObject({ kind: 'quota_exceeded' });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
   it.each([429, 500, 503])('mã %i từ Google thành lỗi chung, không lộ nội dung', async (status) => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response('chi tiết nội bộ', { status })));
 

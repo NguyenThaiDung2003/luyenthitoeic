@@ -20,15 +20,16 @@ const dailyLimit = () => Number(process.env.AI_DAILY_LIMIT ?? 20);
 // Ngày tính theo giờ Việt Nam để lượt được làm mới lúc 0 giờ của người dùng
 const today = () => new Date().toLocaleDateString('en-CA', { timeZone: TIME_ZONE });
 
+const UNAVAILABLE_MESSAGES = {
+  not_configured: 'Tính năng giải thích bằng AI chưa được cấu hình',
+  unavailable: 'AI đang bận, vui lòng thử lại sau',
+  quota_exceeded: 'AI đã dùng hết hạn mức của hệ thống hôm nay, vui lòng thử lại vào ngày mai',
+};
+
 function unavailable(error: unknown) {
-  if (error instanceof GeminiError) {
-    return new ServiceUnavailableException(
-      error.kind === 'not_configured'
-        ? 'Tính năng giải thích bằng AI chưa được cấu hình'
-        : 'AI đang bận, vui lòng thử lại sau',
-    );
-  }
-  return error;
+  return error instanceof GeminiError
+    ? new ServiceUnavailableException(UNAVAILABLE_MESSAGES[error.kind])
+    : error;
 }
 
 @Injectable()

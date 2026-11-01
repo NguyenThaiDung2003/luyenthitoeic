@@ -1,7 +1,7 @@
 // Sinh lời giải thích cho mọi đáp án sai: npm run ai-eval:generate -- explanation-v2
 import { PrismaPg } from '@prisma/adapter-pg';
 import { existsSync } from 'node:fs';
-import { GeminiClient } from '../src/ai/gemini.client.js';
+import { GeminiClient, GeminiError } from '../src/ai/gemini.client.js';
 import { defaultPromptVersion, requestExplanation } from '../src/ai/request-explanation.js';
 import { PrismaClient, type OptionKey } from '../src/generated/prisma/client.js';
 
@@ -33,7 +33,8 @@ const questions = await prisma.question.findMany({
 let created = 0;
 let skipped = 0;
 let failed = 0;
-for (const question of questions) {
+let quotaExceeded = false;
+questions: for (const question of questions) {
   for (const selectedOption of OPTION_KEYS.filter((key) => key !== question.correctOption)) {
     const key = { questionId: question.id, selectedOption, promptVersion: version };
     const existing = await prisma.aiExplanation.findUnique({
@@ -55,7 +56,12 @@ for (const question of questions) {
       });
       await prisma.aiExplanation.create({ data: { ...key, content, model: client.model } });
       created += 1;
-    } catch {
+    } catch (error) {
+      // Hết hạn mức thì dừng; chạy lại sau sẽ bỏ qua các câu đã có
+      if (error instanceof GeminiError && error.kind === 'quota_exceeded') {
+        quotaExceeded = true;
+        break questions;
+      }
       failed += 1;
     }
     await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
@@ -63,5 +69,6 @@ for (const question of questions) {
 }
 
 console.log(`${version}: tạo ${created}, đã có ${skipped}, lỗi ${failed}.`);
+if (quotaExceeded) console.log('Đã dừng vì hết hạn mức Gemini. Chạy lại sau khi hạn mức được cấp lại.');
 await prisma.$disconnect();
-process.exitCode = failed > 0 ? 1 : 0;
+process.exitCode = failed > 0 || quotaExceeded ? 1 : 0;

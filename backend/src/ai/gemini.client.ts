@@ -2,10 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 const TIMEOUT_MS = 20_000;
-const TRANSIENT_STATUSES = new Set([429, 500, 503]);
+const TRANSIENT_STATUSES = new Set([500, 503]);
 const RETRY_DELAYS_MS = [1000, 3000];
 
-export type GeminiErrorKind = 'not_configured' | 'unavailable';
+export type GeminiErrorKind = 'not_configured' | 'unavailable' | 'quota_exceeded';
 
 export class GeminiError extends Error {
   constructor(readonly kind: GeminiErrorKind) {
@@ -42,6 +42,8 @@ export class GeminiClient {
       }
 
       this.logger.warn(`Gemini trả mã ${response.status}`);
+      // Hết hạn mức thì dừng ngay, thử lại chỉ tốn thêm lượt và không thành công
+      if (response.status === 429) throw new GeminiError('quota_exceeded');
       // Thử lại lỗi tạm thời vì đo thực tế model hay trả 503 khi quá tải
       const delay = RETRY_DELAYS_MS[attempt];
       if (!TRANSIENT_STATUSES.has(response.status) || delay === undefined) {

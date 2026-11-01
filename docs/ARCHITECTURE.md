@@ -2,12 +2,12 @@
 
 ## 1. Tổng quan
 ```text
-Trình duyệt ──> Next.js (cổng 3000) ──/api/* (rewrite)──> NestJS (cổng 3001) ──> PostgreSQL (cổng 5433)
+Trình duyệt ──> Next.js (cổng 3002) ──/api/* (rewrite)──> NestJS (cổng 3001) ──> PostgreSQL (cổng 5434)
 ```
 
 - **Frontend:** Next.js App Router, TypeScript, Tailwind CSS. Trình duyệt chỉ gọi `/api/*` cùng nguồn, Next.js chuyển tiếp sang backend.
 - **Backend:** NestJS, chia module theo nghiệp vụ. Mọi kiểm tra quyền và chấm điểm nằm ở đây.
-- **CSDL:** PostgreSQL chạy bằng Docker Compose, truy cập qua Prisma. Dùng cổng 5433 vì máy phát triển đã có PostgreSQL ở 5432.
+- **CSDL:** PostgreSQL chạy bằng Docker Compose, truy cập qua Prisma. Dùng cổng 5434 vì máy phát triển đã có dịch vụ ở 5432 và 5433; frontend dùng 3002 vì 3000 cũng đã bị chiếm.
 - **Phiên bản:** dùng bản ổn định mới nhất, gồm Node 26 và Prisma 7.
 
 ## 2. Xác thực

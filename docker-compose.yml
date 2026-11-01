@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: luyenthitoeic-postgres
+    environment:
+      POSTGRES_USER: toeic
+      # Mật khẩu chỉ dùng cho máy phát triển, CSDL chỉ mở trên localhost
+      POSTGRES_PASSWORD: toeic_dev
+      POSTGRES_DB: toeic
+    ports:
+      # Cổng 5434 vì 5432 và 5433 đã có dịch vụ khác trên máy phát triển
+      - '127.0.0.1:5434:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql
+      - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U toeic -d toeic']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  postgres-data:

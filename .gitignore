@@ -22,3 +22,8 @@ Thumbs.db
 # Trình soạn thảo
 .vscode/
 .idea/
+
+# File sinh tự động
+*.tsbuildinfo
+backend/src/generated/
+

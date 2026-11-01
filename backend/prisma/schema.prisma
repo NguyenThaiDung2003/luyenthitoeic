@@ -1,0 +1,217 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+}
+
+enum Part {
+  PART_5
+  PART_6
+  PART_7
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum OptionKey {
+  A
+  B
+  C
+  D
+}
+
+enum ExamKind {
+  STANDARD
+  REVIEW
+}
+
+enum ExamStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  SUBMITTED
+}
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  fullName     String    @map("full_name")
+  role         Role      @default(STUDENT)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  passages  Passage[]
+  questions Question[]
+  exams     Exam[]
+  attempts  Attempt[]
+
+  @@map("users")
+}
+
+model Topic {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  questions Question[]
+
+  @@map("topics")
+}
+
+model Passage {
+  id          String   @id @default(uuid()) @db.Uuid
+  title       String
+  content     String
+  source      String
+  license     String
+  createdById String?  @map("created_by_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  createdBy User?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  questions Question[]
+
+  @@map("passages")
+}
+
+model Question {
+  id            String     @id @default(uuid()) @db.Uuid
+  part          Part
+  content       String
+  // Luôn đúng 4 lựa chọn theo thứ tự A, B, C, D; ràng buộc CHECK nằm trong migration
+  options       String[]
+  correctOption OptionKey  @map("correct_option")
+  difficulty    Difficulty
+  explanation   String?
+  source        String
+  license       String
+  // Chừa cho phần Listening
+  audioUrl      String?    @map("audio_url")
+  transcript    String?
+  topicId       String     @map("topic_id") @db.Uuid
+  passageId     String?    @map("passage_id") @db.Uuid
+  createdById   String?    @map("created_by_id") @db.Uuid
+  // Lưu trữ thay vì xóa để kết quả cũ không đổi
+  archivedAt    DateTime?  @map("archived_at") @db.Timestamptz
+  createdAt     DateTime   @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt     DateTime   @updatedAt @map("updated_at") @db.Timestamptz
+
+  topic          Topic           @relation(fields: [topicId], references: [id], onDelete: Restrict)
+  passage        Passage?        @relation(fields: [passageId], references: [id], onDelete: Restrict)
+  createdBy      User?           @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  examQuestions  ExamQuestion[]
+  answers        Answer[]
+  aiExplanations AiExplanation[]
+
+  @@index([part, topicId, difficulty])
+  @@index([passageId])
+  @@map("questions")
+}
+
+model Exam {
+  id              String     @id @default(uuid()) @db.Uuid
+  title           String
+  description     String?
+  kind            ExamKind   @default(STANDARD)
+  status          ExamStatus @default(DRAFT)
+  durationMinutes Int        @map("duration_minutes")
+  // Giáo viên tạo đề, hoặc học viên sở hữu bộ ôn tập
+  createdById     String     @map("created_by_id") @db.Uuid
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz
+
+  createdBy User           @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  questions ExamQuestion[]
+  attempts  Attempt[]
+
+  @@index([kind, status])
+  @@map("exams")
+}
+
+model ExamQuestion {
+  examId     String @map("exam_id") @db.Uuid
+  questionId String @map("question_id") @db.Uuid
+  position   Int
+
+  exam     Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  @@id([examId, questionId])
+  @@unique([examId, position])
+  @@index([questionId])
+  @@map("exam_questions")
+}
+
+model Attempt {
+  id             String        @id @default(uuid()) @db.Uuid
+  userId         String        @map("user_id") @db.Uuid
+  examId         String        @map("exam_id") @db.Uuid
+  status         AttemptStatus @default(IN_PROGRESS)
+  startedAt      DateTime      @default(now()) @map("started_at") @db.Timestamptz
+  expiresAt      DateTime      @map("expires_at") @db.Timestamptz
+  submittedAt    DateTime?     @map("submitted_at") @db.Timestamptz
+  autoSubmitted  Boolean       @default(false) @map("auto_submitted")
+  correctCount   Int?          @map("correct_count")
+  totalQuestions Int           @map("total_questions")
+  estimatedScore Int?          @map("estimated_score")
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam    Exam     @relation(fields: [examId], references: [id], onDelete: Restrict)
+  answers Answer[]
+
+  @@index([userId, submittedAt])
+  @@index([examId])
+  @@map("attempts")
+}
+
+model Answer {
+  attemptId      String     @map("attempt_id") @db.Uuid
+  questionId     String     @map("question_id") @db.Uuid
+  selectedOption OptionKey? @map("selected_option")
+  isFlagged      Boolean    @default(false) @map("is_flagged")
+  // Chỉ có giá trị sau khi chấm
+  isCorrect      Boolean?   @map("is_correct")
+  updatedAt      DateTime   @updatedAt @map("updated_at") @db.Timestamptz
+
+  attempt  Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  @@id([attemptId, questionId])
+  @@index([questionId])
+  @@map("answers")
+}
+
+// Chưa dùng cho tới B7
+model AiExplanation {
+  id              String    @id @default(uuid()) @db.Uuid
+  questionId      String    @map("question_id") @db.Uuid
+  selectedOption  OptionKey @map("selected_option")
+  content         Json
+  model           String
+  promptVersion   String    @map("prompt_version")
+  helpfulCount    Int       @default(0) @map("helpful_count")
+  notHelpfulCount Int       @default(0) @map("not_helpful_count")
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, selectedOption, promptVersion])
+  @@map("ai_explanations")
+}

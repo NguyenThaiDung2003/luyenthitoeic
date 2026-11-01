@@ -1,0 +1,417 @@
+openapi: 3.1.0
+info:
+  title: LuyenThiTOEIC API
+  version: 0.1.0
+  description: API hệ thống luyện thi TOEIC Reading.
+servers:
+  - url: /api
+security:
+  - cookieAuth: []
+  - bearerAuth: []
+tags:
+  - name: system
+  - name: auth
+  - name: bank
+    description: Ngân hàng câu hỏi, chỉ giáo viên
+  - name: exams
+  - name: attempts
+  - name: stats
+  - name: recommendations
+  - name: teacher-stats
+    description: Chỉ giáo viên
+paths:
+  /health:
+    get:
+      tags: [system]
+      security: []
+      summary: Kiểm tra sức khỏe API và CSDL
+      responses:
+        '200': { description: Hoạt động bình thường }
+        '503': { description: Không kết nối được CSDL }
+  /auth/register:
+    post:
+      tags: [auth]
+      security: []
+      summary: Đăng ký tài khoản học viên
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RegisterRequest' }
+      responses:
+        '201': { description: Đã tạo tài khoản và đặt cookie }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409': { description: Email đã được dùng }
+  /auth/login:
+    post:
+      tags: [auth]
+      security: []
+      summary: Đăng nhập
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+      responses:
+        '200': { description: Thành công và đặt cookie }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { description: Thử quá nhiều lần }
+  /auth/logout:
+    post:
+      tags: [auth]
+      summary: Đăng xuất
+      responses:
+        '204': { description: Đã xóa cookie }
+  /auth/me:
+    get:
+      tags: [auth]
+      summary: Thông tin người dùng hiện tại
+      responses:
+        '200': { description: Người dùng }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /topics:
+    get:
+      tags: [bank]
+      summary: Danh sách chủ đề (mọi người dùng đã đăng nhập)
+      responses:
+        '200': { description: Danh sách }
+    post:
+      tags: [bank]
+      summary: Tạo chủ đề
+      responses:
+        '201': { description: Đã tạo }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /questions:
+    get:
+      tags: [bank]
+      summary: Lọc câu hỏi
+      parameters:
+        - { name: part, in: query, schema: { $ref: '#/components/schemas/Part' } }
+        - { name: topicId, in: query, schema: { type: string, format: uuid } }
+        - { name: difficulty, in: query, schema: { $ref: '#/components/schemas/Difficulty' } }
+        - { name: q, in: query, schema: { type: string } }
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+        - { name: pageSize, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+      responses:
+        '200': { description: Trang kết quả }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      tags: [bank]
+      summary: Tạo câu hỏi
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/QuestionInput' }
+      responses:
+        '201': { description: Đã tạo }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /questions/{id}:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    get:
+      tags: [bank]
+      summary: Chi tiết câu hỏi
+      responses:
+        '200': { description: Câu hỏi }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [bank]
+      summary: Sửa câu hỏi
+      responses:
+        '200': { description: Đã sửa }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [bank]
+      summary: Lưu trữ câu hỏi
+      responses:
+        '204': { description: Đã lưu trữ }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /passages:
+    get:
+      tags: [bank]
+      summary: Danh sách đoạn văn
+      responses:
+        '200': { description: Trang kết quả }
+    post:
+      tags: [bank]
+      summary: Tạo đoạn văn
+      responses:
+        '201': { description: Đã tạo }
+  /passages/{id}:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    get:
+      tags: [bank]
+      summary: Chi tiết đoạn văn
+      responses:
+        '200': { description: Đoạn văn }
+    patch:
+      tags: [bank]
+      summary: Sửa đoạn văn
+      responses:
+        '200': { description: Đã sửa }
+    delete:
+      tags: [bank]
+      summary: Xóa đoạn văn chưa có câu hỏi
+      responses:
+        '204': { description: Đã xóa }
+        '409': { description: Đoạn văn còn câu hỏi }
+  /exams:
+    get:
+      tags: [exams]
+      summary: Học viên thấy đề đã xuất bản; giáo viên thấy mọi đề chuẩn
+      responses:
+        '200': { description: Danh sách }
+    post:
+      tags: [exams]
+      summary: Tạo đề bằng cách chọn tay
+      responses:
+        '201': { description: Đã tạo bản nháp }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /exams/random:
+    post:
+      tags: [exams]
+      summary: Tạo đề ngẫu nhiên theo part, chủ đề, mức độ
+      responses:
+        '201': { description: Đã tạo bản nháp }
+        '422': { description: Không đủ câu hỏi thỏa điều kiện }
+  /exams/{id}:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    get:
+      tags: [exams]
+      summary: Chi tiết đề (giáo viên)
+      responses:
+        '200': { description: Đề }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    patch:
+      tags: [exams]
+      summary: Sửa đề nháp
+      responses:
+        '200': { description: Đã sửa }
+        '409': { description: Đề đã xuất bản }
+    delete:
+      tags: [exams]
+      summary: Xóa đề chưa có lượt làm
+      responses:
+        '204': { description: Đã xóa }
+        '409': { description: Đề đã có lượt làm }
+  /exams/{id}/publish:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    post:
+      tags: [exams]
+      summary: Xuất bản đề
+      responses:
+        '200': { description: Đã xuất bản }
+  /exams/{id}/attempts:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    post:
+      tags: [attempts]
+      summary: Bắt đầu lượt mới hoặc tiếp tục lượt đang làm
+      responses:
+        '201': { description: Lượt làm bài }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /attempts:
+    get:
+      tags: [attempts]
+      summary: Lịch sử làm bài của tôi
+      responses:
+        '200': { description: Danh sách }
+  /attempts/{id}:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    get:
+      tags: [attempts]
+      summary: Đề đang làm, không có đáp án đúng
+      responses:
+        '200':
+          description: Lượt làm bài
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AttemptPaper' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /attempts/{id}/answers:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    put:
+      tags: [attempts]
+      summary: Lưu nháp các câu trả lời
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SaveAnswersRequest' }
+      responses:
+        '200': { description: Đã lưu, kèm số giây còn lại }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { description: Đã nộp hoặc hết giờ }
+  /attempts/{id}/submit:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    post:
+      tags: [attempts]
+      summary: Nộp bài và chấm điểm
+      responses:
+        '200': { description: Kết quả tóm tắt }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { description: Đã nộp trước đó }
+  /attempts/{id}/result:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    get:
+      tags: [attempts]
+      summary: Kết quả chi tiết, có đáp án và giải thích
+      responses:
+        '200': { description: Kết quả }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { description: Bài chưa nộp }
+  /stats/me/overview:
+    get:
+      tags: [stats]
+      summary: Tổng quan của tôi
+      responses:
+        '200': { description: Tổng quan }
+  /stats/me/topics:
+    get:
+      tags: [stats]
+      summary: Tỷ lệ đúng theo chủ đề
+      responses:
+        '200': { description: Danh sách }
+  /stats/me/trend:
+    get:
+      tags: [stats]
+      summary: Xu hướng 5 lần nộp gần nhất
+      responses:
+        '200': { description: Danh sách }
+  /recommendations:
+    get:
+      tags: [recommendations]
+      summary: Chủ đề được gợi ý ôn
+      responses:
+        '200': { description: Danh sách }
+  /recommendations/review-sets:
+    post:
+      tags: [recommendations]
+      summary: Tạo bộ ôn tập 10 câu
+      responses:
+        '201': { description: Bộ ôn tập và lượt làm }
+        '422': { description: Chưa đủ dữ liệu hoặc câu hỏi }
+  /teacher/stats/overview:
+    get:
+      tags: [teacher-stats]
+      summary: Tổng quan
+      responses:
+        '200': { description: Tổng quan }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /teacher/stats/topics:
+    get:
+      tags: [teacher-stats]
+      summary: Điểm trung bình theo chủ đề
+      responses:
+        '200': { description: Danh sách }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /teacher/stats/hardest-questions:
+    get:
+      tags: [teacher-stats]
+      summary: Câu hỏi hay sai nhất
+      responses:
+        '200': { description: Danh sách }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /teacher/stats/students-at-risk:
+    get:
+      tags: [teacher-stats]
+      summary: Học viên cần hỗ trợ
+      responses:
+        '200': { description: Danh sách }
+        '403': { $ref: '#/components/responses/Forbidden' }
+components:
+  securitySchemes:
+    cookieAuth: { type: apiKey, in: cookie, name: access_token }
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    BadRequest: { description: Dữ liệu không hợp lệ }
+    Unauthorized: { description: Chưa đăng nhập hoặc token hết hạn }
+    Forbidden: { description: Không có quyền }
+    NotFound: { description: Không tìm thấy }
+  schemas:
+    Part: { type: string, enum: [PART_5, PART_6, PART_7] }
+    Difficulty: { type: string, enum: [EASY, MEDIUM, HARD] }
+    OptionKey: { type: string, enum: [A, B, C, D] }
+    RegisterRequest:
+      type: object
+      required: [email, password, fullName]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 8, maxLength: 72 }
+        fullName: { type: string, minLength: 1, maxLength: 100 }
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string }
+    QuestionInput:
+      type: object
+      required: [part, content, options, correctOption, difficulty, topicId, source, license]
+      properties:
+        part: { $ref: '#/components/schemas/Part' }
+        content: { type: string }
+        options:
+          type: array
+          items: { type: string }
+          minItems: 4
+          maxItems: 4
+        correctOption: { $ref: '#/components/schemas/OptionKey' }
+        difficulty: { $ref: '#/components/schemas/Difficulty' }
+        topicId: { type: string, format: uuid }
+        passageId: { type: [string, 'null'], format: uuid }
+        explanation: { type: [string, 'null'] }
+        source: { type: string }
+        license: { type: string }
+        audioUrl: { type: [string, 'null'] }
+        transcript: { type: [string, 'null'] }
+    AttemptPaper:
+      type: object
+      description: Không bao giờ chứa correctOption hoặc explanation.
+      properties:
+        id: { type: string, format: uuid }
+        examTitle: { type: string }
+        remainingSeconds: { type: integer }
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string, format: uuid }
+              position: { type: integer }
+              part: { $ref: '#/components/schemas/Part' }
+              content: { type: string }
+              options: { type: array, items: { type: string } }
+              passage: { type: [object, 'null'] }
+              selectedOption: { oneOf: [{ $ref: '#/components/schemas/OptionKey' }, { type: 'null' }] }
+              isFlagged: { type: boolean }
+    SaveAnswersRequest:
+      type: object
+      required: [answers]
+      properties:
+        answers:
+          type: array
+          maxItems: 200
+          items:
+            type: object
+            required: [questionId]
+            properties:
+              questionId: { type: string, format: uuid }
+              selectedOption: { oneOf: [{ $ref: '#/components/schemas/OptionKey' }, { type: 'null' }] }
+              isFlagged: { type: boolean }

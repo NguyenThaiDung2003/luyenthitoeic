@@ -1,0 +1,24 @@
+# Thư viện
+node_modules/
+
+# File build
+.next/
+dist/
+build/
+coverage/
+
+# Biến môi trường và khóa API
+.env
+.env.*
+!.env.example
+
+# Log
+*.log
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Trình soạn thảo
+.vscode/
+.idea/

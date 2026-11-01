@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary":"#ffffff","background":"#faf8ff","on-error":"#ffffff","surface-dim":"#d2d9f4","tertiary-fixed-dim":"#4edea3","primary-container":"#1e3a8a","surface-container-high":"#e2e7ff","primary":"#00236f","tertiary-fixed":"#6ffbbe","inverse-primary":"#b6c4ff","on-tertiary-container":"#27c38a","on-primary-fixed":"#00164e","surface-container-lowest":"#ffffff","on-tertiary-fixed-variant":"#005236","secondary-fixed-dim":"#ffb95f","secondary-container":"#fea619","surface-variant":"#dae2fd","surface-bright":"#faf8ff","tertiary":"#00311f","on-background":"#131b2e","secondary-fixed":"#ffddb8","surface-container-highest":"#dae2fd","error-container":"#ffdad6","on-primary-fixed-variant":"#264191","inverse-on-surface":"#eef0ff","on-primary-container":"#90a8ff","on-secondary-fixed":"#2a1700","surface-container":"#eaedff","surface-tint":"#4059aa","on-tertiary-fixed":"#002113","on-surface":"#131b2e","outline-variant":"#c5c5d3","primary-fixed-dim":"#b6c4ff","inverse-surface":"#283044","secondary":"#855300","tertiary-container":"#004a31","on-error-container":"#93000a","on-surface-variant":"#444651","outline":"#757682","surface-container-low":"#f2f3ff","error":"#ba1a1a","on-secondary":"#ffffff","on-secondary-container":"#684000","primary-fixed":"#dce1ff","surface":"#faf8ff","on-primary":"#ffffff","on-secondary-fixed-variant":"#653e00"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","gutter-sm":"1rem","space-xl":"2.5rem","space-xs":"0.25rem","space-sm":"0.5rem","margin-mobile":"1rem","margin":"2rem","space-lg":"1.5rem","space-md":"1rem"},"fontFamily":{"label-lg":["Inter"],"headline-lg":["Be Vietnam Pro"],"label-sm":["Inter"],"headline-sm":["Be Vietnam Pro"],"body-reading":["Be Vietnam Pro"],"headline-lg-mobile":["Be Vietnam Pro"],"mono-timer":["Inter"],"headline-xl":["Be Vietnam Pro"],"label-md":["Inter"],"headline-xl-mobile":["Be Vietnam Pro"],"body-subtle":["Be Vietnam Pro"],"body-default":["Be Vietnam Pro"],"headline-md":["Be Vietnam Pro"]},"fontSize":{"label-lg":["15px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"0em","fontWeight":"600"}],"body-reading":["17px",{"lineHeight":"28px","letterSpacing":"0.01em","fontWeight":"400"}],"headline-lg-mobile":["22px",{"lineHeight":"30px","letterSpacing":"0em","fontWeight":"600"}],"mono-timer":["18px",{"lineHeight":"24px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.02em","fontWeight":"500"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-subtle":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"body-default":["15px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"0em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body-default text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between py-6 px-4"><div class="flex flex-col gap-6"><div class="flex items-center gap-3 px-3 py-2"><div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[22px]">menu_book</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">LuyenThiTOEIC</span><span class="font-label-sm text-label-sm text-secondary font-semibold uppercase tracking-wider">Cổng Luyện Thi</span></div></div><nav class="flex flex-col gap-1.5" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-xl"><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="trang-chu" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Trang chủ</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="de-luyen-tap" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span>Đề luyện tập</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="ket-qua" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span>Kết quả</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="on-tap-goi-y" href="#"><span class="material-symbols-outlined text-[20px]">auto_awesome</span><span>Ôn tập gợi ý</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="hoi-dap" href="#"><span class="material-symbols-outlined text-[20px]">forum</span><span>Hỏi đáp</span></a></nav></div><div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between shadow-[0_1px_3px_rgba(15,23,42,0.03)]"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">person</span></div><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface font-semibold truncate">Nguyễn Minh Anh</span><span class="font-label-sm text-label-sm px-2 py-0.5 mt-0.5 rounded-full bg-surface-container-high text-on-primary-fixed-variant font-medium w-fit">Học viên</span></div></div><button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">logout</span></button></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-8 flex items-center justify-between"><div class="flex items-center gap-4 flex-1 max-w-md"><div class="relative w-full"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span><input class="w-full pl-10 pr-4 py-2 rounded-xl bg-surface-container-lowest text-on-surface placeholder:text-on-surface-variant/70 font-body-subtle text-body-subtle focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="Tìm kiếm đề thi, từ vựng, ngữ pháp..." type="text"/></div></div><div class="flex items-center gap-5"><div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-sm"><span class="material-symbols-outlined text-secondary text-[20px]">local_fire_department</span><span class="font-label-md text-label-md font-bold text-on-secondary-fixed">7 ngày liên tiếp</span></div><button class="relative p-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 flex-1 w-full p-8 max-w-[1400px] mx-auto"><div class="flex flex-col w-full relative">
+<!-- BACKGROUND CONTEXT: TRANG KẾT QUẢ BÀI THI ETS 2024 - TEST 04 -->
+<div class="w-full flex flex-col gap-8 opacity-80 pointer-events-none select-none filter blur-[1px]">
+<!-- Header kết quả bài thi -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-1 rounded-md bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm uppercase tracking-wide">Mô phỏng chuẩn ETS</span>
+<span class="text-on-surface-variant font-label-md text-label-md">Hoàn thành lúc 15:42 • 24/10/2024</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold">ETS 2024 - Test 04 (Reading Mastery)</h1>
+<p class="font-body-subtle text-body-subtle text-on-surface-variant">Phân tích chi tiết từng kỹ năng đọc hiểu, ngữ pháp và tốc độ xử lý Part 5, 6, 7.</p>
+</div>
+<div class="flex items-center gap-6 bg-surface-container-low px-6 py-4 rounded-xl">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Điểm Reading</span>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-xl text-headline-xl font-bold text-primary">415</span>
+<span class="font-label-md text-label-md text-on-surface-variant">/ 495</span>
+</div>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-headline-sm">
+          84%
+        </div>
+</div>
+</div>
+<!-- Tóm tắt số liệu 3 Parts -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Part 5: Sentence Incomplete</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-semibold">27/30</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[90%]"></div>
+</div>
+<span class="font-body-subtle text-body-subtle text-on-surface-variant">Tốc độ TB: 32s / câu</span>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Part 6: Text Completion</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-semibold">13/16</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[81%]"></div>
+</div>
+<span class="font-body-subtle text-body-subtle text-on-surface-variant">Tốc độ TB: 48s / câu</span>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Part 7: Reading Comprehension</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-semibold">41/54</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full w-[76%]"></div>
+</div>
+<span class="font-body-subtle text-body-subtle text-on-surface-variant">Tốc độ TB: 68s / câu (Cần cải thiện)</span>
+</div>
+</div>
+<!-- Bảng danh sách câu hỏi nền -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between pb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Danh sách câu hỏi Part 7</h2>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg">Tất cả (54)</span>
+<span class="px-3 py-1 bg-error-container text-on-error-container font-label-sm text-label-sm rounded-lg font-semibold">Sai (13)</span>
+</div>
+</div>
+<!-- Item câu 154 bị focus -->
+<div class="bg-surface-container-high/40 p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="w-9 h-9 rounded-full bg-error text-on-error flex items-center justify-center font-label-md text-label-md font-bold">154</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">What is indicated about the new logistics depot in Da Nang?</span>
+<span class="font-body-subtle text-body-subtle text-error">Bạn đã chọn: A (Sai) • Đáp án đúng: B</span>
+</div>
+</div>
+<span class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+          Đang xem AI Tutor
+        </span>
+</div>
+<!-- Item mẫu khác -->
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="w-9 h-9 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center font-label-md text-label-md font-bold">155</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">According to the memo, who should employees contact for software issues?</span>
+<span class="font-body-subtle text-body-subtle text-on-tertiary-container font-medium">Bạn đã chọn: D (Đúng)</span>
+</div>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Thời gian: 42s</span>
+</div>
+</div>
+</div>
+<!-- BACKDROP OVERLAY LÀM NỔI BẬT DRAWER -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-50 transition-opacity duration-300" id="aiDrawerBackdrop" onclick="toggleDrawer(false)"></div>
+<!-- SLIDE-OVER DRAWER "AI TUTOR EXPLANATION" (560px) -->
+<aside class="fixed top-0 right-0 bottom-0 w-full sm:w-[580px] bg-surface-container-lowest z-50 shadow-2xl flex flex-col transition-transform duration-300 transform translate-x-0 overflow-hidden" id="aiDrawer">
+<!-- DRAWER HEADER CỐ ĐỊNH -->
+<div class="px-6 py-4 bg-surface-container-lowest flex flex-col gap-3 shadow-sm shrink-0">
+<div class="flex items-center justify-between">
+<!-- Huy hiệu AI Tutor -->
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">AI Tutor TOEIC 990</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold tracking-tight">PRO</span>
+</div>
+<span class="font-body-subtle text-body-subtle text-on-surface-variant">Giải thích chuyên sâu &amp; phân tích bẫy đề thi ETS</span>
+</div>
+</div>
+<!-- Điều khiển Drawer -->
+<div class="flex items-center gap-1">
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" id="btnSwitchMode" onclick="switchState()" title="Chuyển chế độ hiển thị mẫu">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-error transition-colors" onclick="toggleDrawer(false)" title="Đóng cửa sổ">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+</div>
+<!-- Context Bar: Mã câu hỏi & Filter Chế độ -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-md bg-primary text-on-primary font-label-md text-label-md font-bold">Câu 154</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Part 7 • Single Passage</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-primary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>Bẫy Paraphrase &amp; Nhiễu mốc thời gian</span>
+</div>
+</div>
+<!-- State Tab Demo Switcher (Giúp xem trực quan 3 trạng thái ngay trên UI) -->
+<div class="grid grid-cols-3 gap-1 p-1 bg-surface-container rounded-lg text-center font-label-sm text-label-sm font-semibold">
+<button class="py-1.5 rounded-md bg-surface-container-lowest text-primary shadow-sm transition-all" id="tabNormal" onclick="setState('normal')">1. Nội dung chuẩn</button>
+<button class="py-1.5 rounded-md text-on-surface-variant hover:text-on-surface transition-all" id="tabLoading" onclick="setState('loading')">2. Đang tải (AI AI)</button>
+<button class="py-1.5 rounded-md text-on-surface-variant hover:text-on-surface transition-all" id="tabError" onclick="setState('error')">3. Báo lỗi mạng</button>
+</div>
+</div>
+<!-- DRAWER BODY: SCROLLABLE MAIN CONTENT -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+<!-- ================= TRẠNG THÁI 1: CHÍNH (NORMAL EXPLANATION VIEW) ================= -->
+<div class="flex flex-col gap-6" id="viewNormal">
+<!-- THẺ TÓM TẮT ĐỐI CHIẾU LỰA CHỌN -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Nội dung câu hỏi</span>
+<p class="font-headline-sm text-headline-sm text-on-surface font-semibold">
+              What is indicated about the new logistics depot in Da Nang?
+            </p>
+</div>
+<!-- Lựa chọn sai người dùng đã chọn -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">cancel</span>
+                Lựa chọn của bạn • Sai
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">Lựa chọn (A)</span>
+</div>
+<p class="font-body-default text-body-default text-on-surface line-through opacity-80 pt-1">
+              (A) It will recruit 150 local technicians by next month.
+            </p>
+</div>
+<!-- Lựa chọn đúng chuẩn ETS -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Đáp án chính xác
+              </span>
+<span class="font-label-sm text-label-sm text-tertiary font-mono font-bold">Lựa chọn (B)</span>
+</div>
+<p class="font-body-default text-body-default text-on-surface font-semibold pt-1">
+              (B) It has completely replaced the regional sorting operations in Hai Phong.
+            </p>
+</div>
+</div>
+<!-- PHẦN 1: TẠI SAO ĐÁP ÁN B ĐÚNG? -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex flex-col gap-3">
+<div class="flex items-center gap-2 text-tertiary font-headline-sm text-headline-sm font-bold">
+<span class="material-symbols-outlined text-[22px] text-tertiary">verified</span>
+<h3>1. Tại sao đáp án (B) đúng?</h3>
+</div>
+<div class="p-3.5 bg-surface-container-low rounded-xl flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Dẫn chứng trực tiếp từ đoạn 2 (Dòng 8-11):</span>
+<blockquote class="italic font-body-reading text-body-reading text-primary border-l-0 pl-1 font-medium">
+              “...taking over all cargo sorting previously routed through the Hai Phong regional center.”
+            </blockquote>
+</div>
+<div class="flex flex-col gap-2 pt-1 font-body-default text-body-default text-on-surface">
+<p>
+              Đề thi ETS sử dụng kỹ thuật <strong class="text-primary font-semibold">Paraphrase tương đương tuyệt đối</strong>:
+            </p>
+<div class="bg-surface-container p-3 rounded-lg flex flex-col gap-1 font-body-subtle text-body-subtle">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant font-mono">taking over all cargo sorting</span>
+<span class="material-symbols-outlined text-[16px] text-primary">sync_alt</span>
+<span class="font-semibold text-primary font-mono">completely replaced the sorting operations</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="text-on-surface-variant font-mono">previously routed through Hai Phong</span>
+<span class="material-symbols-outlined text-[16px] text-primary">sync_alt</span>
+<span class="font-semibold text-primary font-mono">in Hai Phong</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-subtle text-body-subtle">
+              Việc trung tâm mới tại Đà Nẵng đảm nhận toàn bộ luồng hàng trước đây qua Hải Phòng đồng nghĩa với việc nó đã thay thế hoàn toàn hoạt động phân loại tại khu vực này.
+            </p>
+</div>
+</div>
+<!-- PHẦN 2: TẠI SAO ĐÁP ÁN A SAI? (BẪY GÂY NHIỄU) -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex flex-col gap-3">
+<div class="flex items-center gap-2 text-error font-headline-sm text-headline-sm font-bold">
+<span class="material-symbols-outlined text-[22px] text-error">cloud_download</span>
+<h3>2. Tại sao lựa chọn (A) của bạn sai?</h3>
+</div>
+<div class="p-3 bg-error-container/40 rounded-xl flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-error shrink-0 mt-0.5">warning</span>
+<div class="flex flex-col gap-1 font-body-subtle text-body-subtle text-on-surface">
+<span class="font-bold text-error">Bẫy chi tiết sai mốc thời gian (Distractor - False Timeline Trap)</span>
+<span>Đoạn văn có nhắc tới số lượng <span class="font-semibold">“150 local technicians”</span>, nhưng bẫy nằm ở trạng từ chỉ thời gian:</span>
+</div>
+</div>
+<ul class="flex flex-col gap-2 font-body-default text-body-default text-on-surface pl-1">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant mt-1">remove</span>
+<span><strong>Trong bài đọc:</strong> “...slated to hire 150 technicians across the <em class="underline text-error">upcoming six months</em>.” (kế hoạch trải dài trong 6 tháng tới).</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-error mt-1">close</span>
+<span><strong>Lựa chọn (A):</strong> Ghi rõ <em class="text-error font-semibold">“by next month”</em> (ngay trước tháng sau). Đây là thông tin bị bóp méo thời hạn, khiến phương án trở nên sai hoàn toàn.</span>
+</li>
+</ul>
+</div>
+<!-- PHẦN 3: TỪ VỰNG & NGỮ PHÁP THEN CHỐT -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary font-headline-sm text-headline-sm font-bold">
+<span class="material-symbols-outlined text-[22px] text-primary">bookmark</span>
+<h3>3. Từ vựng &amp; Ngữ pháp then chốt</h3>
+</div>
+<button class="px-2.5 py-1 rounded bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">library_add</span>
+              Lưu vào Sổ tay
+            </button>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<!-- Vocab card 1 -->
+<div class="p-3 bg-surface-container-low rounded-xl flex flex-col gap-1.5">
+<div class="flex items-baseline justify-between">
+<span class="font-label-lg text-label-lg font-bold text-primary">take over (phrasal verb)</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">TOEIC 750+</span>
+</div>
+<p class="font-body-subtle text-body-subtle text-on-surface"><strong>Định nghĩa:</strong> Tiếp quản, đảm nhiệm quyền kiểm soát hoặc thay thế vị trí của ai/cái gì.</p>
+<div class="font-body-subtle text-body-subtle text-on-surface-variant italic">
+                Ví dụ: Ms. Linh will take over as head of distribution next Monday.
+              </div>
+</div>
+<!-- Vocab card 2 -->
+<div class="p-3 bg-surface-container-low rounded-xl flex flex-col gap-1.5">
+<div class="flex items-baseline justify-between">
+<span class="font-label-lg text-label-lg font-bold text-primary">be slated to + V (phrase)</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">TOEIC 850+</span>
+</div>
+<p class="font-body-subtle text-body-subtle text-on-surface"><strong>Định nghĩa:</strong> Được dự kiến / lên lịch sẽ làm gì (= scheduled / expected to do something).</p>
+<div class="font-body-subtle text-body-subtle text-on-surface-variant italic">
+                Ví dụ: The brand-new depot is slated to launch next quarter.
+              </div>
+</div>
+</div>
+</div>
+<!-- PHẦN 4: BÀI TẬP THỰC HÀNH TƯƠNG TỰ (CHECK HIỂU BÀI) -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface font-headline-sm text-headline-sm font-bold">
+<span class="material-symbols-outlined text-[22px] text-secondary">model_training</span>
+<h3>4. Thử sức câu hỏi tương tự</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Part 7 Mini Check</span>
+</div>
+<p class="font-body-default text-body-default text-on-surface">
+            Đọc đoạn trích ngắn sau và chọn phương án đúng nhất:
+          </p>
+<div class="p-3 bg-surface-container-low rounded-lg font-body-reading text-body-reading italic text-on-surface-variant">
+            “Apex Tech will absorb all customer inquiries handled formerly by the Singapore helpdesk starting December 1.”
+          </div>
+<div class="flex flex-col gap-2 pt-1 font-body-default text-body-default">
+<span class="font-label-md text-label-md font-semibold text-on-surface">What does the announcement state about Apex Tech?</span>
+<button class="p-3 rounded-lg text-left bg-surface-container-lowest hover:bg-surface-container transition-all flex items-center justify-between group" onclick="checkMiniPractice('A')">
+<span>(A) It plans to expand the Singapore branch next month.</span>
+<span class="material-symbols-outlined text-[18px] text-outline opacity-0 group-hover:opacity-100">check</span>
+</button>
+<button class="p-3 rounded-lg text-left bg-surface-container-lowest hover:bg-surface-container transition-all flex items-center justify-between group" onclick="checkMiniPractice('B')">
+<span>(B) It will replace the Singapore support operations.</span>
+<span class="material-symbols-outlined text-[18px] text-outline opacity-0 group-hover:opacity-100">check</span>
+</button>
+</div>
+<!-- Kết quả tương tác mini practice -->
+<div class="hidden p-3 rounded-lg bg-tertiary-container/20 text-tertiary font-body-subtle text-body-subtle flex items-start gap-2" id="miniResultBox">
+<span class="material-symbols-outlined text-[20px] text-tertiary shrink-0">task_alt</span>
+<div class="flex flex-col gap-1">
+<span class="font-bold">Chính xác! Đáp án đúng là (B).</span>
+<span>Cụm từ <em>absorb all inquiries handled formerly by...</em> đồng nghĩa với <em>replace the support operations</em>. Bạn đã nắm vững cấu trúc này!</span>
+</div>
+</div>
+</div>
+<!-- KHỐI ĐÁNH GIÁ PHẢN HỒI (USER FEEDBACK) -->
+<div class="bg-surface-container-low p-5 rounded-xl flex flex-col gap-4 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Giải thích này có giúp ích cho bạn không?</span>
+<span class="font-body-subtle text-body-subtle text-on-surface-variant">Phản hồi giúp AI Tutor cải thiện độ chuẩn xác và mạch lạc</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 py-2.5 px-4 rounded-xl bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md font-semibold transition-all shadow-sm flex items-center justify-center gap-2" id="btnFeedbackYes" onclick="submitFeedback(true)">
+<span class="material-symbols-outlined text-[20px]">thumb_up</span>
+<span>Hữu ích, đã hiểu bài</span>
+</button>
+<button class="flex-1 py-2.5 px-4 rounded-xl bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-label-md text-label-md font-semibold transition-all shadow-sm flex items-center justify-center gap-2" id="btnFeedbackNo" onclick="submitFeedback(false)">
+<span class="material-symbols-outlined text-[20px]">thumb_down</span>
+<span>Chưa hiểu / Cần giải thích lại</span>
+</button>
+</div>
+<div class="hidden p-2 rounded bg-tertiary-container text-on-tertiary font-label-sm text-label-sm text-center" id="feedbackFeedbackSuccess">
+            Cảm ơn bạn! Đã ghi nhận phản hồi để tinh chỉnh dữ liệu giải thích.
+          </div>
+<div class="hidden flex-col gap-2 pt-2" id="feedbackNegativeDrawer">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Bạn cảm thấy chưa rõ phần nào?</span>
+<div class="flex flex-wrap gap-2">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-on-surface font-label-sm text-label-sm hover:bg-primary-fixed">Chưa rõ Paraphrase</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-on-surface font-label-sm text-label-sm hover:bg-primary-fixed">Giải thích ngữ pháp quá dài</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-on-surface font-label-sm text-label-sm hover:bg-primary-fixed">Cần dịch thêm tiếng Việt</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= TRẠNG THÁI 2: ĐANG TẢI (LOADING STATE SHOWCASE) ================= -->
+<div class="hidden flex-col gap-5 py-4" id="viewLoading">
+<div class="p-6 rounded-2xl bg-surface-container-low flex flex-col items-center text-center gap-4 shadow-sm">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<div class="absolute inset-0 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+<span class="material-symbols-outlined text-primary text-[28px] animate-pulse">auto_awesome</span>
+</div>
+<div class="flex flex-col gap-1 max-w-sm">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">AI Tutor đang phân tích...</span>
+<p class="font-body-subtle text-body-subtle text-on-surface-variant">Đang đối chiếu dữ liệu ngân hàng ETS 2024, bóc tách ngữ cảnh đoạn văn và phân tích các phương án nhiễu.</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span>Ước tính: ~1.2 giây</span>
+</div>
+</div>
+<!-- Skeleton Placeholders -->
+<div class="flex flex-col gap-4 animate-pulse">
+<div class="h-28 bg-surface-container-high rounded-xl"></div>
+<div class="h-44 bg-surface-container-high rounded-xl"></div>
+<div class="h-36 bg-surface-container-high rounded-xl"></div>
+</div>
+</div>
+<!-- ================= TRẠNG THÁI 3: LỖI HỆ THỐNG / MẠNG (ERROR STATE SHOWCASE) ================= -->
+<div class="hidden flex-col gap-5 py-8" id="viewError">
+<div class="p-8 rounded-2xl bg-error-container/30 flex flex-col items-center text-center gap-4 shadow-sm">
+<div class="w-16 h-16 rounded-full bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[36px]">cloud_off</span>
+</div>
+<div class="flex flex-col gap-1.5 max-w-sm">
+<span class="font-headline-sm text-headline-sm font-bold text-error">Không thể kết nối với AI Tutor</span>
+<p class="font-body-subtle text-body-subtle text-on-surface-variant">
+              Kết nối tới cụm máy chủ phân tích đề thi bị gián đoạn hoặc phiên làm việc đã hết hạn. Vui lòng kiểm tra lại mạng.
+            </p>
+</div>
+<div class="flex gap-3 pt-2">
+<button class="px-5 py-2.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm" onclick="setState('loading'); setTimeout(() =&gt; setState('normal'), 1200);">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+<span>Thử lại ngay</span>
+</button>
+<button class="px-4 py-2.5 rounded-xl bg-surface-container-highest text-on-surface font-label-md text-label-md font-semibold hover:bg-surface-container transition-all" onclick="setState('normal')">
+              Đóng thông báo
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- DRAWER FOOTER CỐ ĐỊNH: Ô CHAT HỎI THÊM AI -->
+<div class="p-4 bg-surface-container-lowest shadow-[0_-2px_10px_rgba(0,0,0,0.03)] shrink-0 flex flex-col gap-2.5">
+<div class="flex items-center gap-2">
+<div class="relative flex-1">
+<input class="w-full pl-4 pr-10 py-2.5 rounded-xl bg-surface-container text-on-surface placeholder:text-on-surface-variant font-body-subtle text-body-subtle focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary shadow-sm" id="aiFollowUpInput" placeholder="Hỏi AI thêm về câu này (ví dụ: 'Tại sao không chọn câu D?')..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-primary hover:bg-primary-container hover:text-on-primary-container transition-colors" onclick="sendFollowUpQuestion()">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm px-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">check_circle</span>
+          Dữ liệu bảo chứng theo chuẩn ETS TOEIC
+        </span>
+<span class="font-mono">Model: GPT-4o TOEIC-FineTuned</span>
+</div>
+</div>
+</aside>
+<!-- FLOATING TRIGGER NẾU DRAWER BỊ ĐÓNG -->
+<button class="hidden fixed bottom-8 right-8 z-40 px-5 py-3 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm shadow-xl hover:bg-primary-container transition-all flex items-center gap-2.5" id="floatingOpenDrawerBtn" onclick="toggleDrawer(true)">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span>Xem lại Giải thích AI (Câu 154)</span>
+</button>
+</div>
+<!-- SCRIPT XỬ LÝ TƯƠNG TÁC GIAO DIỆN -->
+<script>
+  function toggleDrawer(isOpen) {
+    const drawer = document.getElementById('aiDrawer');
+    const backdrop = document.getElementById('aiDrawerBackdrop');
+    const floatingBtn = document.getElementById('floatingOpenDrawerBtn');
+
+    if (isOpen) {
+      drawer.classList.remove('translate-x-full');
+      drawer.classList.add('translate-x-0');
+      backdrop.classList.remove('hidden');
+      floatingBtn.classList.add('hidden');
+    } else {
+      drawer.classList.remove('translate-x-0');
+      drawer.classList.add('translate-x-full');
+      backdrop.classList.add('hidden');
+      floatingBtn.classList.remove('hidden');
+    }
+  }
+
+  function setState(state) {
+    const viewNormal = document.getElementById('viewNormal');
+    const viewLoading = document.getElementById('viewLoading');
+    const viewError = document.getElementById('viewError');
+
+    const tabNormal = document.getElementById('tabNormal');
+    const tabLoading = document.getElementById('tabLoading');
+    const tabError = document.getElementById('tabError');
+
+    // Reset tabs
+    [tabNormal, tabLoading, tabError].forEach(tab => {
+      tab.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+      tab.classList.add('text-on-surface-variant');
+    });
+
+    viewNormal.classList.add('hidden');
+    viewLoading.classList.add('hidden');
+    viewError.classList.add('hidden');
+
+    if (state === 'normal') {
+      viewNormal.classList.remove('hidden');
+      tabNormal.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+    } else if (state === 'loading') {
+      viewLoading.classList.remove('hidden');
+      tabLoading.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+    } else if (state === 'error') {
+      viewError.classList.remove('hidden');
+      tabError.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+    }
+  }
+
+  function switchState() {
+    const viewNormal = document.getElementById('viewNormal');
+    const viewLoading = document.getElementById('viewLoading');
+    if (!viewNormal.classList.contains('hidden')) {
+      setState('loading');
+    } else if (!viewLoading.classList.contains('hidden')) {
+      setState('error');
+    } else {
+      setState('normal');
+    }
+  }
+
+  function checkMiniPractice(choice) {
+    const resultBox = document.getElementById('miniResultBox');
+    resultBox.classList.remove('hidden');
+  }
+
+  function submitFeedback(isPositive) {
+    const successMsg = document.getElementById('feedbackFeedbackSuccess');
+    const negativeDrawer = document.getElementById('feedbackNegativeDrawer');
+    const btnYes = document.getElementById('btnFeedbackYes');
+    const btnNo = document.getElementById('btnFeedbackNo');
+
+    if (isPositive) {
+      successMsg.classList.remove('hidden');
+      negativeDrawer.classList.add('hidden');
+      btnYes.classList.add('bg-primary', 'text-on-primary');
+      btnNo.classList.remove('bg-error', 'text-on-error');
+    } else {
+      successMsg.classList.add('hidden');
+      negativeDrawer.classList.remove('hidden');
+      negativeDrawer.classList.add('flex');
+    }
+  }
+
+  function sendFollowUpQuestion() {
+    const input = document.getElementById('aiFollowUpInput');
+    if (!input.value.trim()) return;
+    
+    // Switch to loading briefly to simulate prompt processing
+    setState('loading');
+    setTimeout(() => {
+      setState('normal');
+      input.value = '';
+      alert('AI Tutor: "Trong đoạn 3, lựa chọn D không thể chọn vì văn bản nêu rõ sự kiện diễn ra tại Đà Nẵng chứ không phải trụ sở chính Hà Nội."');
+    }, 900);
+  }
+</script></main></div></body></html>

@@ -62,6 +62,79 @@ export interface ExamSummary {
   } | null;
 }
 
+export interface ResultQuestion {
+  id: string;
+  position: number;
+  part: Part;
+  content: string;
+  options: string[];
+  correctOption: OptionKey;
+  explanation: string | null;
+  topic: Topic;
+  passage: { id: string; title: string; content: string } | null;
+  selectedOption: OptionKey | null;
+  isFlagged: boolean;
+  isCorrect: boolean;
+}
+
+export interface GroupStat {
+  key: string;
+  correct: number;
+  total: number;
+}
+
+export interface AttemptResult {
+  id: string;
+  exam: { id: string; title: string; durationMinutes: number };
+  startedAt: string;
+  submittedAt: string;
+  autoSubmitted: boolean;
+  correctCount: number;
+  totalQuestions: number;
+  estimatedScore: number;
+  byPart: GroupStat[];
+  byTopic: GroupStat[];
+  questions: ResultQuestion[];
+}
+
+export interface AttemptListItem {
+  id: string;
+  examTitle: string;
+  examKind: "STANDARD" | "REVIEW";
+  status: "IN_PROGRESS" | "SUBMITTED";
+  startedAt: string;
+  submittedAt: string | null;
+  correctCount: number | null;
+  totalQuestions: number;
+  estimatedScore: number | null;
+}
+
+export interface Overview {
+  completedExams: number;
+  totalQuestions: number;
+  correctQuestions: number;
+  accuracy: number | null;
+  totalMinutes: number;
+  latestScore: number | null;
+}
+
+export interface TopicStat {
+  topicId: string;
+  name: string;
+  total: number;
+  correct: number;
+  accuracy: number;
+  recentAccuracy: number | null;
+}
+
+export interface TrendPoint {
+  attemptId: string;
+  examTitle: string;
+  submittedAt: string;
+  estimatedScore: number;
+  accuracy: number;
+}
+
 export interface Page<T> {
   items: T[];
   total: number;

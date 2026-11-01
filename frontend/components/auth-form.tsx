@@ -102,10 +102,11 @@ export function AuthForm() {
             className={inputClass}
           />
         </label>
-        <label className="flex flex-col gap-1 font-label text-label font-medium">
-          Mật khẩu
-          <span className="relative">
+        <div className="flex flex-col gap-1 font-label text-label font-medium">
+          <label htmlFor="password">Mật khẩu</label>
+          <div className="relative">
             <input
+              id="password"
               required
               type={showPassword ? "text" : "password"}
               minLength={mode === "register" ? 8 : undefined}
@@ -123,8 +124,8 @@ export function AuthForm() {
             >
               <Icon name={showPassword ? "visibility_off" : "visibility"} />
             </button>
-          </span>
-        </label>
+          </div>
+        </div>
         <button
           type="submit"
           disabled={submitting}

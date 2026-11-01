@@ -8,7 +8,16 @@ Hệ thống luyện thi TOEIC Reading có AI giải thích và gợi ý ôn t�
 - **Backend**: NestJS
 - **Cơ sở dữ liệu**: PostgreSQL, Prisma
 - **Xác thực**: JWT
-- **AI**: chưa chốt nhà cung cấp
+- **AI**: chưa chốt nhà cung cấp; B7 và B10 đang hoãn, `ai_explanations` chưa dùng
+
+## Tài liệu
+| File | Nội dung |
+|---|---|
+| `docs/PROMPTS.md` | Bộ prompt theo thứ tự thực hiện, gồm phần hoãn |
+| `docs/PRD.md` | Yêu cầu, suy ra từ thiết kế |
+| `docs/ARCHITECTURE.md`, `docs/openapi.yaml` | Dữ liệu, API, quyết định kỹ thuật |
+| `docs/SECURITY_REVIEW.md` | Kết quả rà soát và lỗi còn mở |
+| `docs/DEPLOYMENT.md` | Triển khai, sao lưu, checklist |
 
 ## Cấu trúc repo
 | Thư mục | Vai trò |

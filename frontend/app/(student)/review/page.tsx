@@ -39,6 +39,8 @@ export default function ReviewPage() {
       );
   }, []);
 
+  const noQuestionsLeft = recommendations.every((item) => item.unseenQuestions === 0);
+
   const createSet = async () => {
     setError(null);
     setCreating(true);
@@ -89,6 +91,10 @@ export default function ReviewPage() {
               <h2 className="mb-3 text-headline-sm font-semibold">Bộ ôn tập gợi ý</h2>
               {recommendations.length === 0 ? (
                 <p className="text-on-surface-variant">Bạn chưa có chủ đề yếu. Hãy làm thêm đề mới.</p>
+              ) : noQuestionsLeft ? (
+                <p className="text-on-surface-variant">
+                  Bạn đã làm hết các câu thuộc chủ đề yếu. Hãy chờ giáo viên bổ sung câu hỏi mới.
+                </p>
               ) : (
                 <>
                   <ul className="mb-4 flex flex-col gap-2">

@@ -62,6 +62,13 @@ export class AuthService {
     return toPublicUser(user);
   }
 
+  // Cấp lại token theo dữ liệu hiện tại trong CSDL, phòng thi gọi định kỳ để phiên không hết hạn giữa bài
+  async refresh(userId: string) {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new UnauthorizedException('Phiên đăng nhập không hợp lệ');
+    return this.issueSession(user);
+  }
+
   private async issueSession(user: User) {
     const token = await this.jwt.signAsync({ sub: user.id, role: user.role });
     return { token, user: toPublicUser(user) };

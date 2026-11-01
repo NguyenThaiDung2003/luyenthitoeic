@@ -49,6 +49,14 @@ export class AuthController {
     return { user };
   }
 
+  @HttpCode(200)
+  @Post('refresh')
+  async refresh(@CurrentUser() current: AuthUser, @Res({ passthrough: true }) response: Response) {
+    const { token, user } = await this.auth.refresh(current.id);
+    setSessionCookie(response, token);
+    return { user };
+  }
+
   @HttpCode(204)
   @Post('logout')
   logout(@Res({ passthrough: true }) response: Response) {

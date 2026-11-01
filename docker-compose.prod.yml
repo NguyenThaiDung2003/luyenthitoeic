@@ -1,0 +1,56 @@
+# Triển khai trên VPS: docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: toeic
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Thiếu POSTGRES_PASSWORD}
+      POSTGRES_DB: toeic
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U toeic -d toeic']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # Chạy migration và seed một lần trước khi backend khởi động
+  migrate:
+    build: ./backend
+    command: sh -c "npx prisma migrate deploy && npm run seed"
+    environment: &backend-env
+      DATABASE_URL: postgresql://toeic:${POSTGRES_PASSWORD}@postgres:5432/toeic
+      JWT_SECRET: ${JWT_SECRET:?Thiếu JWT_SECRET}
+      JWT_EXPIRES_IN_SECONDS: 7200
+      FRONTEND_ORIGIN: ${PUBLIC_URL:?Thiếu PUBLIC_URL}
+      # Chuỗi proxy: reverse proxy HTTPS rồi tới Next.js
+      TRUST_PROXY_HOPS: 2
+      SEED_TEACHER_EMAIL: ${SEED_TEACHER_EMAIL:?Thiếu SEED_TEACHER_EMAIL}
+      SEED_TEACHER_PASSWORD: ${SEED_TEACHER_PASSWORD:?Thiếu SEED_TEACHER_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment: *backend-env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://backend:3001
+    restart: unless-stopped
+    ports:
+      # Chỉ mở cho reverse proxy HTTPS trên cùng máy
+      - '127.0.0.1:${FRONTEND_PORT:-8080}:3002'
+    depends_on:
+      - backend
+
+volumes:
+  postgres-data:

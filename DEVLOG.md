@@ -1,5 +1,96 @@
 # Nhật ký phát triển
 
+## 2026-11-01: B12. Triển khai
+
+**Đã làm**
+- Dockerfile backend và frontend, `docker-compose.prod.yml`, `docs/DEPLOYMENT.md`.
+- `prisma` và `tsx` chuyển sang dependencies vì migration và seed chạy ở production.
+- Bật `output: "standalone"` cho Next.js.
+
+**Kiểm tra**
+- Build image thật và chạy stack production cô lập ở cổng 8091, luồng trình duyệt đạt toàn bộ.
+- Cookie có `HttpOnly; Secure; SameSite=Lax`.
+- Backend từ chối khởi động khi `JWT_SECRET` ngắn; seed từ chối mật khẩu mẫu ở production.
+- Chưa deploy thật lên Vercel, Render hay VPS.
+
+**Lỗi tự phát hiện**
+- Dockerfile ban đầu sao chép `src/generated` đã bị gitignore, sẽ thất bại trên bản clone sạch. Đã bỏ vì postinstall tự sinh lại.
+
+## 2026-11-01: B11. Kiểm thử và bảo mật
+
+**Đã làm**
+- Rà soát toàn bộ API, kết quả trong `docs/SECURITY_REVIEW.md`.
+- Sửa 3 lỗi mức cao, 2 mức trung bình, 1 mức thấp. Còn 3 lỗi mức trung bình và 6 lỗi mức thấp được ghi lại.
+- Test bảo mật tự liệt kê endpoint thật từ router, nên endpoint mới quên khai báo quyền sẽ làm test thất bại.
+- Chạy luồng người dùng trên Chromium bằng Playwright đặt ngoài repo, có cả khổ điện thoại.
+
+**Lỗi phát hiện nhờ chạy trình duyệt**
+- Nút hiện mật khẩu nằm trong `label` làm sai tên của ô mật khẩu.
+- Trang gợi ý hiện nút ôn tập dù đã hết câu chưa làm.
+
+## 2026-11-01: B9. Thống kê giáo viên
+
+**Đã làm**
+- Bốn endpoint thống kê bằng SQL và trang `/teacher/stats`.
+
+**Quyết định**
+- Điểm theo chủ đề là tỷ lệ đúng quy đổi tuyến tính sang thang 495.
+- Học viên cần hỗ trợ: tỷ lệ đúng dưới 50% trong 5 lần nộp gần nhất.
+- Không có bảng lớp học nên thống kê trên toàn bộ học viên.
+
+## 2026-11-01: B8. Gợi ý ôn tập
+
+**Thuật toán** (`backend/src/recommendations/recommend.ts`)
+1. Chọn tối đa 3 chủ đề có tỷ lệ đúng thấp nhất, bỏ chủ đề đã đúng hết.
+2. Chọn mức độ theo năng lực: dưới 50% là Dễ, dưới 75% là Trung bình, còn lại là Nâng cao.
+3. Chia 10 câu theo tỷ lệ sai bằng phương pháp phần dư lớn nhất.
+4. Chọn câu chưa làm theo mức phù hợp, thiếu thì lấy mức gần nhất.
+5. Vẫn thiếu thì lấy từ chủ đề yếu khác, sau đó từ các chủ đề còn lại.
+
+Thuật toán tách riêng thành hàm thuần để test với dữ liệu giả. Không gọi mô hình ngôn ngữ.
+
+## 2026-11-01: B6. Chấm điểm, kết quả và thống kê
+
+**Đã làm**
+- Trang kết quả, trang lịch sử, trang chủ học viên.
+- Thống kê bằng SQL: tỷ lệ đúng theo chủ đề, xu hướng 5 lần gần nhất.
+
+**Quyết định**
+- Điểm ước lượng tuyến tính, làm tròn theo bước 5, tối thiểu 5. Ghi rõ không phải điểm chính thức.
+- Câu bỏ trống tính là sai.
+
+## 2026-11-01: B5. Tạo đề và làm bài
+
+**Đã làm**
+- Tạo đề chọn tay hoặc ngẫu nhiên, xuất bản đề, phòng thi.
+- Tự lưu mỗi 5 giây, chỉ gửi câu đã đổi; mất mạng thì giữ lại và gửi lại.
+
+**Quyết định**
+- Lưu nháp và chấm bài cùng khóa dòng `attempts`, nên nộp đồng thời chỉ một yêu cầu thành công.
+- Tắt `cacheComponents` của Next.js vì ứng dụng tải dữ liệu phía client, tính năng này không có lợi và bắt bọc `Suspense` cho route động.
+
+## 2026-11-01: B4. Ngân hàng câu hỏi
+
+**Đã làm**
+- CRUD câu hỏi, đoạn văn, lọc theo part, chủ đề, mức độ, từ khóa.
+- Script `npm run import:questions`: báo số dòng lỗi, nạp trong một giao dịch, chạy lại không tạo bản trùng.
+- 10 câu mẫu tự soạn trong `data/sample-questions.json`.
+
+**Quyết định**
+- Schema nạp có thêm `part` và `passage` vì hệ thống cần để phân loại câu Part 6, 7.
+- Thêm `@nestjs/mapped-types` để dùng `PartialType` cho DTO sửa.
+
+## 2026-11-01: B3. Xác thực và phân quyền
+
+**Đã làm**
+- Đăng ký, đăng nhập, đăng xuất, guard toàn cục theo vai trò, trang đăng nhập.
+- Test đăng nhập sai, sai quyền, token hết hạn, token giả mạo, `alg: none`, giới hạn thử.
+
+**Quyết định**
+- Dùng bcrypt cost 12.
+- Bỏ chọn vai trò ở màn hình đăng nhập vì vai trò lấy từ tài khoản.
+- Tự viết guard JWT bằng `@nestjs/jwt`, không dùng Passport vì không cần nhiều chiến lược đăng nhập.
+
 ## 2026-11-01: B2. Dựng khung
 
 **Đã làm**

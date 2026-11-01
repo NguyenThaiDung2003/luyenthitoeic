@@ -2,7 +2,7 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { AttemptsService } from '../attempts/attempts.service.js';
 import { orderQuestions } from '../exams/exams.service.js';
 import { pickRandom } from '../exams/pick-random.js';
-import { ExamKind, ExamStatus } from '../generated/prisma/client.js';
+import { AttemptStatus, ExamKind, ExamStatus } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { StatsService } from '../stats/stats.service.js';
 import { allocateSlots, buildReviewSet, REVIEW_SET_SIZE, selectWeakTopics, targetDifficulty } from './recommend.js';
@@ -36,6 +36,19 @@ export class RecommendationsService {
   }
 
   async createReviewSet(userId: string) {
+    // Bộ cũ chưa làm xong thì mở lại, tránh bấm nhiều lần tạo đề thừa trong CSDL
+    await this.attempts.finalizeExpiredFor(userId);
+    const unfinished = await this.prisma.attempt.findFirst({
+      where: { userId, status: AttemptStatus.IN_PROGRESS, exam: { kind: ExamKind.REVIEW } },
+    });
+    if (unfinished) {
+      return {
+        examId: unfinished.examId,
+        attemptId: unfinished.id,
+        questionCount: unfinished.totalQuestions,
+      };
+    }
+
     const topics = await this.stats.topics(userId);
     if (topics.length === 0) {
       throw new UnprocessableEntityException('Hãy làm ít nhất một đề để hệ thống có dữ liệu gợi ý');

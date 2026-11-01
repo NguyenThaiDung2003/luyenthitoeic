@@ -57,6 +57,13 @@ paths:
         '200': { description: Thành công và đặt cookie }
         '401': { $ref: '#/components/responses/Unauthorized' }
         '429': { description: Thử quá nhiều lần }
+  /auth/refresh:
+    post:
+      tags: [auth]
+      summary: Gia hạn phiên đăng nhập, dùng trong phòng thi
+      responses:
+        '200': { description: Đã đặt cookie mới }
+        '401': { $ref: '#/components/responses/Unauthorized' }
   /auth/logout:
     post:
       tags: [auth]

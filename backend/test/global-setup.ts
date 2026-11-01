@@ -9,6 +9,10 @@ export default function setup() {
   process.env.DATABASE_URL = url;
   process.env.JWT_SECRET = 'test-secret-chi-dung-trong-moi-truong-test';
   process.env.JWT_EXPIRES_IN_SECONDS = '3600';
+  // Test không bao giờ gọi Gemini thật
+  process.env.GEMINI_API_KEY = 'khoa-gia-trong-test';
+  process.env.GEMINI_MODEL = 'model-test';
+  process.env.AI_PROMPT_VERSION = 'explanation-v1';
   process.env.AUTH_RATE_LIMIT = '100000';
   process.env.GLOBAL_RATE_LIMIT = '100000';
   execSync('npx prisma migrate deploy', { stdio: 'pipe', env: process.env });

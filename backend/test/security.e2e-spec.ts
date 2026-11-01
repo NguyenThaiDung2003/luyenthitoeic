@@ -38,6 +38,8 @@ const ROUTES: { method: 'get' | 'post' | 'put' | 'patch' | 'delete'; path: strin
   { method: 'get', path: '/api/stats/me/trend', role: Role.STUDENT },
   { method: 'get', path: '/api/recommendations', role: Role.STUDENT },
   { method: 'post', path: '/api/recommendations/review-sets', role: Role.STUDENT },
+  { method: 'post', path: `/api/attempts/${ID}/questions/${ID}/explanation`, role: Role.STUDENT },
+  { method: 'post', path: `/api/ai-explanations/${ID}/feedback`, role: Role.STUDENT },
   { method: 'get', path: '/api/teacher/stats/overview', role: Role.TEACHER },
   { method: 'get', path: '/api/teacher/stats/topics', role: Role.TEACHER },
   { method: 'get', path: '/api/teacher/stats/hardest-questions', role: Role.TEACHER },
@@ -52,7 +54,7 @@ function registeredRoutes(context: TestContext) {
   return express.router.stack.flatMap(({ route }) =>
     route
       ? Object.keys(route.methods).map(
-          (method) => `${method.toUpperCase()} ${route.path.replace(/:id/g, ID)}`,
+          (method) => `${method.toUpperCase()} ${route.path.replace(/:\w+/g, ID)}`,
         )
       : [],
   );

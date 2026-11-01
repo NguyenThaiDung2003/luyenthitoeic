@@ -16,6 +16,7 @@ COPY prisma ./prisma
 RUN npm ci --omit=dev && chown -R node:node /app
 COPY --from=build /app/dist ./dist
 COPY scripts ./scripts
+COPY prompts ./prompts
 COPY src/questions/import-validator.ts ./src/questions/import-validator.ts
 USER node
 EXPOSE 3001

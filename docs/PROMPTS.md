@@ -40,6 +40,8 @@ Bộ prompt đã điều chỉnh từ phần B ban đầu. Phần AI (B7, B10) t
 ## B13. Báo cáo
 "Dựa trên code thật và `/docs`, viết bản nháp các chương trong `/report` theo cấu trúc đồ án phổ biến vì chưa có mẫu trường. Chỉ mô tả những gì có trong hệ thống, không bịa số liệu. Đánh dấu [CẦN SỐ LIỆU], [CHƯA TRIỂN KHAI], [CẦN TRÍCH DẪN]. Không tự tạo tài liệu tham khảo."
 
-## Hoãn
-- **B7. AI giải thích đáp án**: dùng lại prompt gốc khi làm phần AI. Bảng `ai_explanations` đã có sẵn.
-- **B10. Bộ đánh giá phần AI**: làm sau B7 vì cần dữ liệu lời giải thích thật.
+## B7. AI giải thích đáp án
+Đã làm với Google Gemini. Prompt nằm ở `backend/prompts`.
+
+## B10. Bộ đánh giá phần AI
+Đã làm bằng các lệnh `npm run ai-eval:generate`, `ai-eval:export`, `ai-eval:score` trong `backend/`. Điểm rubric do người chấm tay.

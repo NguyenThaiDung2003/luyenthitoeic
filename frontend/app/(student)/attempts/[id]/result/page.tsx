@@ -59,7 +59,7 @@ export default function ResultPage() {
         </Card>
       </div>
 
-      <ResultQuestions questions={result.questions} />
+      <ResultQuestions attemptId={result.id} questions={result.questions} />
     </>
   );
 }

@@ -61,6 +61,8 @@ model User {
   questions Question[]
   exams     Exam[]
   attempts  Attempt[]
+  aiUsage   AiUsage[]
+  aiFeedback AiExplanationFeedback[]
 
   @@map("users")
 }
@@ -198,7 +200,6 @@ model Answer {
   @@map("answers")
 }
 
-// Chưa dùng cho tới B7
 model AiExplanation {
   id              String    @id @default(uuid()) @db.Uuid
   questionId      String    @map("question_id") @db.Uuid
@@ -210,8 +211,35 @@ model AiExplanation {
   notHelpfulCount Int       @default(0) @map("not_helpful_count")
   createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz
 
-  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  question Question                @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  feedback AiExplanationFeedback[]
 
   @@unique([questionId, selectedOption, promptVersion])
   @@map("ai_explanations")
+}
+
+// Số lượt gọi AI mỗi ngày của từng người dùng
+model AiUsage {
+  userId String   @map("user_id") @db.Uuid
+  date   DateTime @db.Date
+  count  Int      @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, date])
+  @@map("ai_usage")
+}
+
+// Mỗi người một phiếu cho một lời giải thích
+model AiExplanationFeedback {
+  explanationId String   @map("explanation_id") @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  helpful       Boolean
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  explanation AiExplanation @relation(fields: [explanationId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([explanationId, userId])
+  @@map("ai_explanation_feedback")
 }

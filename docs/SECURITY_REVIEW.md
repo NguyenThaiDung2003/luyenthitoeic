@@ -32,6 +32,14 @@ Ngày rà soát: 2026-11-01. Phạm vi: toàn bộ API backend, cấu hình fron
 | Thấp | `POST /auth/register` trả 409 làm lộ email đã đăng ký | Chấp nhận để thông báo rõ cho người dùng |
 | Thấp | Frontend chưa có Content-Security-Policy | Cần cấu hình cho Google Fonts và script của Next.js |
 
+## 3a. Phần AI
+- Khóa Gemini chỉ đọc từ biến môi trường, gửi qua header, không nằm trong URL hay log.
+- Không gửi thông tin học viên. Có test xác nhận prompt không chứa email và tên.
+- Nội dung câu hỏi được đặt trong khối dữ liệu để giảm rủi ro chèn lệnh vào prompt. Câu hỏi do giáo viên soạn nên rủi ro thấp, và rủi ro này không loại bỏ hoàn toàn được.
+- Đáp án chỉ được giải thích sau khi nộp bài, và chỉ qua lượt của chính học viên.
+- Chi phí bị chặn bởi cache và giới hạn lượt mỗi ngày. Gọi đồng thời không vượt được giới hạn.
+- Nội dung AI có thể sai, nên giao diện ghi rõ và có nút phản hồi.
+
 ## 4. Kết quả theo hạng mục
 | Hạng mục | Kết quả | Bằng chứng |
 |---|---|---|

@@ -7,7 +7,7 @@ Có hai phương án. Phương án 1 phù hợp để demo vì không phải qu�
 ### Backend và CSDL trên Render
 1. Tạo PostgreSQL trên Render và lấy Internal Database URL.
 2. Tạo Web Service kiểu Docker, Root Directory là `backend`.
-3. Pre-Deploy Command: `npx prisma migrate deploy && npm run seed`.
+3. Gói trả phí: Pre-Deploy Command là `npx prisma migrate deploy && npm run seed`. Gói miễn phí không có bước này, nên đặt Docker Command là `npm run start:render`.
 4. Health Check Path: `/api/health`.
 5. Đặt biến môi trường theo bảng ở mục 3.
 

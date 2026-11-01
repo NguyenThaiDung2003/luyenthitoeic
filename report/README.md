@@ -5,8 +5,11 @@
 Bản nháp này viết theo cấu trúc đồ án phổ biến vì `/report` chưa có mẫu của trường. Khi có mẫu, cần chuyển nội dung sang đúng định dạng và thứ tự chương của trường.
 
 ## Danh sách chương
+Tệp tổng hợp được gộp từ các tệp chương. Khi sửa chương, cần sửa ở cả tệp tổng hợp hoặc gộp lại.
+
 | Tệp | Nội dung |
 |---|---|
+| [bao-cao-do-an.md](bao-cao-do-an.md) | Toàn bộ báo cáo trong một tệp, kèm bảng việc còn thiếu |
 | [chuong-1-tong-quan.md](chuong-1-tong-quan.md) | Lý do chọn đề tài, mục tiêu, phạm vi |
 | [chuong-2-co-so-ly-thuyet.md](chuong-2-co-so-ly-thuyet.md) | Bài thi TOEIC Reading, công nghệ sử dụng |
 | [chuong-3-phan-tich-thiet-ke.md](chuong-3-phan-tich-thiet-ke.md) | Yêu cầu, kiến trúc, dữ liệu, API |

@@ -1,5 +1,14 @@
 # Nhật ký phát triển
 
+## 2026-11-01: Tổng hợp báo cáo
+
+**Đã làm**
+- Gộp 6 chương và phần tài liệu tham khảo thành `report/bao-cao-do-an.md`, thêm trang tiêu đề, mục lục và bảng việc còn thiếu.
+- Nội dung chương giữ nguyên, các tệp chương vẫn còn.
+
+**Kiểm tra**
+- Đối chiếu tự động với tệp nguồn: đủ nội dung, đúng thứ tự, đủ sơ đồ Mermaid.
+
 ## 2026-11-01: B13. Báo cáo
 
 **Đã làm**

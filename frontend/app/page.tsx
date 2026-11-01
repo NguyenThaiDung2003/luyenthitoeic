@@ -1,7 +1,16 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { homePathFor, useAuth } from "@/components/auth-provider";
+
 export default function Home() {
-  return (
-    <main className="flex min-h-screen items-center justify-center p-8">
-      <h1 className="text-headline-xl font-bold text-primary">LuyenThiTOEIC</h1>
-    </main>
-  );
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) router.replace(user ? homePathFor(user.role) : "/login");
+  }, [loading, user, router]);
+
+  return <p className="p-8 text-on-surface-variant">Đang tải...</p>;
 }

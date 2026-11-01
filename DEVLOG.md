@@ -56,3 +56,5 @@
 **Kiểm tra**
 - Chưa có test vì chưa có code.
 - Đã xác nhận bằng git rằng `.gitignore` chặn `.env` và `frontend/node_modules`, không chặn `.env.example`.
+
+

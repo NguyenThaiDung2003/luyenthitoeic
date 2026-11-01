@@ -5,6 +5,7 @@ info:
   description: API hệ thống luyện thi TOEIC Reading.
 servers:
   - url: /api
+    description: Cùng nguồn với frontend
 security:
   - cookieAuth: []
   - bearerAuth: []
@@ -247,7 +248,7 @@ paths:
           application/json:
             schema: { $ref: '#/components/schemas/SaveAnswersRequest' }
       responses:
-        '200': { description: Đã lưu, kèm số giây còn lại }
+        '200': { description: 'Đã lưu, kèm số giây còn lại' }
         '403': { $ref: '#/components/responses/Forbidden' }
         '409': { description: Đã nộp hoặc hết giờ }
   /attempts/{id}/submit:

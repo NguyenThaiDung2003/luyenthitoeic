@@ -29,6 +29,6 @@ Tệp tổng hợp được gộp từ các tệp chương. Khi sửa chương, 
 ## Điểm cần lưu ý trước khi nộp
 - **Tên đề tài có "AI giải thích" nhưng B7 và B10 chưa làm.** Phần cốt lõi về AI của đề tài vẫn đang để trống. Nên hoàn thành trước khi bảo vệ, hoặc trao đổi với giảng viên hướng dẫn về phạm vi.
 - **Ngân hàng câu hỏi hiện chỉ có 10 câu mẫu**, nên chưa đủ để thực nghiệm hay đánh giá thuật toán gợi ý.
-- **Chưa deploy thật**, chưa có người dùng thật, nên chưa có số liệu sử dụng hay hiệu năng.
+- **Đã deploy tại https://luyenthitoeic-delta.vercel.app** nhưng chưa có người dùng thật, nên chưa có số liệu sử dụng hay hiệu năng.
 - Số liệu kiểm thử trong chương 5 đo ngày 2026-11-01. Cần đo lại nếu mã nguồn thay đổi.
 - Tài liệu tham khảo cố ý để trống, không có nguồn nào được tự tạo.

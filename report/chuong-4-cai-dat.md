@@ -76,4 +76,4 @@ Các ngưỡng 50% và 75% là lựa chọn thiết kế, chưa được kiểm 
 ## 4.9. Triển khai
 Dự án có Dockerfile nhiều giai đoạn cho backend và frontend, chạy bằng người dùng không phải root, và `docker-compose.prod.yml` cho VPS. Hướng dẫn tại `docs/DEPLOYMENT.md`.
 
-Stack production đã được chạy thử bằng image thật trên máy phát triển. Hệ thống chưa được deploy lên máy chủ công khai. `[CẦN BỔ SUNG: địa chỉ triển khai nếu có]`
+Hệ thống đã được triển khai tại https://luyenthitoeic-delta.vercel.app: frontend trên Vercel, backend và PostgreSQL trên gói miễn phí của Render, vùng Singapore. Gói miễn phí không có bước chạy trước khi deploy, nên migration và seed chạy khi container khởi động.

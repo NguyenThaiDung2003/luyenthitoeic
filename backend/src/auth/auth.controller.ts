@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpCode, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Res, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import type { CookieOptions, Response } from 'express';
 import { LoginDto, RegisterDto } from './auth.dto.js';
 import { AuthService } from './auth.service.js';
 import { type AuthUser, CurrentUser, Public } from './decorators.js';
 import { ACCESS_TOKEN_COOKIE } from './guards.js';
+import { LoginThrottleGuard } from './login-throttle.guard.js';
 
 const AUTH_LIMIT = {
   default: { limit: () => Number(process.env.AUTH_RATE_LIMIT ?? 10), ttl: 60_000 },
@@ -41,6 +42,7 @@ export class AuthController {
 
   @Public()
   @Throttle(AUTH_LIMIT)
+  @UseGuards(LoginThrottleGuard)
   @HttpCode(200)
   @Post('login')
   async login(@Body() dto: LoginDto, @Res({ passthrough: true }) response: Response) {

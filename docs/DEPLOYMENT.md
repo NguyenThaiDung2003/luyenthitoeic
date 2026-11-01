@@ -2,6 +2,20 @@
 
 Có hai phương án. Phương án 1 phù hợp để demo vì không phải quản trị máy chủ. Phương án 2 đã được chạy thử với image thật trên máy phát triển.
 
+## Bản đang chạy
+| Thành phần | Địa chỉ | Gói |
+|---|---|---|
+| Frontend | https://luyenthitoeic-delta.vercel.app | Vercel |
+| Backend | https://luyenthitoeic-backend.onrender.com | Render Free, Singapore |
+| CSDL | `luyenthitoeic-db` | Render Postgres Free, Singapore |
+
+- Backend tự deploy khi push lên `master`.
+- Frontend chưa nối với GitHub, deploy thủ công: `cd frontend`, rồi `npx vercel@latest deploy --prod`.
+- Tên `luyenthitoeic.vercel.app` thuộc về người khác. `FRONTEND_ORIGIN` phải là địa chỉ thật ở bảng trên.
+- Mật khẩu giáo viên xem ở biến `SEED_TEACHER_PASSWORD` trên trang Environment của service Render.
+- Khi đặt biến trên Vercel bằng PowerShell, dùng `vercel env add TEN production --value "giá trị"`. Không truyền qua pipe vì PowerShell làm sai giá trị.
+- Gói miễn phí của Render có giới hạn về ngủ dịch vụ và thời hạn CSDL. Kiểm tra điều khoản hiện tại trước ngày demo.
+
 ## 1. Vercel và Render
 
 ### Backend và CSDL trên Render
@@ -48,7 +62,7 @@ Trình duyệt chỉ gọi tên miền Vercel, nên cookie đăng nhập là coo
 
 **`TRUST_PROXY_HOPS`** là số proxy đứng trước backend, dùng để lấy đúng IP cho giới hạn tốc độ:
 - VPS: `2` (reverse proxy, Next.js).
-- Vercel và Render: `2` (Vercel, Render). Xem lại sau khi deploy theo checklist ở mục 6, vì số proxy thực tế do nhà cung cấp quyết định.
+- Vercel và Render: `2` (Vercel, Render). Giá trị này chỉ ảnh hưởng tới giới hạn theo IP. Đăng nhập được giới hạn theo email nên không phụ thuộc vào nó.
 
 ## 4. Migration khi deploy
 - Chỉ dùng `npx prisma migrate deploy`. Không dùng `migrate dev` ở production.
@@ -81,6 +95,6 @@ docker compose -f docker-compose.prod.yml --env-file .env.prod exec -T postgres 
 - [ ] Giáo viên đăng nhập được và đổi mật khẩu seed nếu đã từng dùng chung.
 - [ ] Tạo đề, xuất bản, học viên làm bài, tự lưu, tải lại trang vẫn còn bài, nộp bài, xem kết quả.
 - [ ] Học viên mở `/teacher/stats` bị chuyển đi; gọi API giáo viên nhận 403.
-- [ ] Đăng nhập sai 11 lần trong một phút nhận 429, trong khi người dùng ở IP khác vẫn đăng nhập được. Nếu người khác cũng bị chặn thì `TRUST_PROXY_HOPS` đang đặt sai.
+- [ ] Đăng nhập sai 11 lần trong một phút với cùng một email nhận 429, còn email khác vẫn đăng nhập được.
 - [ ] `git ls-files` không có file `.env` thật.
 - [ ] Chạy thử một lần sao lưu và khôi phục.

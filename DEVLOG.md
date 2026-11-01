@@ -1,5 +1,21 @@
 # Nhật ký phát triển
 
+## 2026-11-01: Deploy production
+
+**Đã làm**
+- Frontend trên Vercel, backend và PostgreSQL 18 trên gói miễn phí của Render.
+- Nạp 10 câu mẫu qua API giáo viên. Chạy luồng trình duyệt trên địa chỉ thật, tạo ra một đề "Đề thử" và tài khoản thử nghiệm trong CSDL production.
+- Thêm `npm run start:render` vì gói miễn phí không có pre-deploy.
+
+**Lỗi gặp khi deploy**
+- Render chạy nguyên chuỗi sau `sh -c` như một lệnh, nên chuyển sang script npm.
+- `BACKEND_URL` bị sai vì truyền qua pipe của PowerShell, đặt lại bằng `--value`.
+- `FRONTEND_ORIGIN` ban đầu đặt nhầm `luyenthitoeic.vercel.app`, tên này của người khác; đã đổi sang địa chỉ thật.
+- Kết nối ngoài tới PostgreSQL gói miễn phí bị ngắt khi chạy script nạp, nên nạp qua API.
+
+**Lỗi bảo mật phát hiện trên production**
+- Giới hạn đăng nhập theo IP không có tác dụng qua Vercel. Thêm `LoginThrottleGuard` tính theo email.
+
 ## 2026-11-01: Tổng hợp báo cáo
 
 **Đã làm**

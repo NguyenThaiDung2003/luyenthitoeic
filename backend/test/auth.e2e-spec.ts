@@ -149,6 +149,28 @@ describe('Xác thực và phân quyền (e2e)', () => {
     });
   });
 
+  it('giới hạn theo email kể cả khi mỗi lần đến từ một IP khác', async () => {
+    const limited = process.env.AUTH_RATE_LIMIT;
+    process.env.AUTH_RATE_LIMIT = '3';
+    const fresh = await createTestApp();
+    try {
+      const attempt = (email: string, ip: string) =>
+        fresh
+          .http()
+          .post('/api/auth/login')
+          .set('X-Forwarded-For', ip)
+          .send({ email, password: PASSWORD });
+
+      for (let i = 1; i <= 3; i += 1) await attempt('nan-nhan@example.com', `203.0.113.${i}`).expect(401);
+      await attempt('NAN-NHAN@example.com', '203.0.113.4').expect(429);
+      // Tài khoản khác không bị ảnh hưởng
+      await attempt('nguoi-khac@example.com', '203.0.113.5').expect(401);
+    } finally {
+      process.env.AUTH_RATE_LIMIT = limited;
+      await fresh.app.close();
+    }
+  });
+
   it('khóa đăng nhập tạm thời sau quá nhiều lần thử', async () => {
     const limited = process.env.AUTH_RATE_LIMIT;
     process.env.AUTH_RATE_LIMIT = '3';

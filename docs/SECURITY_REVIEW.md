@@ -17,12 +17,13 @@ Ngày rà soát: 2026-11-01. Phạm vi: toàn bộ API backend, cấu hình fron
 | Trung bình | Mỗi lần bấm tạo bộ ôn tập sinh thêm đề, làm phình CSDL | Mở lại bộ chưa hoàn thành thay vì tạo mới |
 | Trung bình | Frontend thiếu header chống nhúng trang và đoán kiểu nội dung | Thêm `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` |
 | Thấp | `@nestjs/mau` không dùng nhưng kéo theo gói có cảnh báo cao | Gỡ khỏi dependency |
+| Cao | Kiểm tra sau deploy cho thấy 12 lần đăng nhập sai qua Vercel không bị chặn, vì Vercel ra Internet bằng nhiều IP nên giới hạn theo IP không có tác dụng | Thêm giới hạn theo email cho `POST /auth/login` |
 
 ## 3. Lỗi còn mở
 | Mức | Vấn đề | Đề xuất |
 |---|---|---|
-| Trung bình | Giới hạn đăng nhập tính theo IP, chưa khóa theo tài khoản nên không chặn được tấn công phân tán | Thêm bộ đếm theo email |
-| Trung bình | `TRUST_PROXY_HOPS` phụ thuộc hạ tầng. Đặt sai thì mọi người dùng chung một hạn mức, hoặc kẻ tấn công giả được IP | Đặt đúng theo `docs/DEPLOYMENT.md`; kiểm tra sau khi deploy |
+| Trung bình | Giới hạn theo email có thể bị lợi dụng để tạm khóa đăng nhập của người khác trong tối đa 1 phút | Chấp nhận vì thời gian khóa ngắn |
+| Trung bình | Giới hạn theo IP cho đăng ký và API chung không tin cậy được khi đi qua Vercel | Thêm bộ đếm theo tài khoản hoặc đặt tường lửa trước backend |
 | Trung bình | Đăng xuất chỉ xóa cookie; token đã bị sao chép vẫn dùng được tới khi hết hạn (2 giờ) | Thêm danh sách thu hồi nếu cần |
 | Thấp | Vai trò trong token cũ có hiệu lực tới khi hết hạn nếu bị đổi | Thời hạn token ngắn đã giới hạn rủi ro |
 | Thấp | Sửa đáp án đúng của câu hỏi ảnh hưởng tới lượt đang làm chưa chấm | Khóa sửa đáp án nếu câu thuộc đề đã xuất bản |
@@ -37,7 +38,7 @@ Ngày rà soát: 2026-11-01. Phạm vi: toàn bộ API backend, cấu hình fron
 | Quyền từng endpoint | Đạt | 37 endpoint cần đăng nhập đều trả 401 khi chưa đăng nhập; endpoint theo vai trò đều trả 403 khi sai vai trò |
 | Lộ đáp án | Đạt | Đề thi dùng `select` liệt kê trường được phép; test đọc mọi endpoint trước khi nộp |
 | Injection | Đạt | Prisma và `$queryRaw` dạng template đều tham số hóa; id kiểm tra UUID; có test chuỗi tấn công SQL |
-| Giới hạn tốc độ | Đạt một phần | 10 lần mỗi phút cho đăng nhập, đăng ký; 300 lần mỗi phút toàn cục; xem mục 3 |
+| Giới hạn tốc độ | Đạt một phần | Đăng nhập: 10 lần mỗi phút theo email; đăng ký: 10 lần mỗi phút theo IP; toàn cục: 300 lần mỗi phút theo IP; xem mục 3 |
 | Lộ khóa | Đạt | `.env` không được theo dõi; khóa chỉ đọc từ biến môi trường |
 | CORS | Đạt | Chỉ `FRONTEND_ORIGIN`; có test nguồn lạ |
 | CSRF | Đạt | Cookie `SameSite=Lax`, thao tác ghi không dùng GET |

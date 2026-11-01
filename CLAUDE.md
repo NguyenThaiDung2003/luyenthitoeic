@@ -80,6 +80,8 @@ npm run build
 
 Tài khoản giáo viên lấy từ `SEED_TEACHER_EMAIL` và `SEED_TEACHER_PASSWORD` trong `backend/.env`.
 
+Bản production: https://luyenthitoeic-delta.vercel.app. Chi tiết ở `docs/DEPLOYMENT.md`.
+
 ## Phiên bản
 Dùng bản ổn định mới nhất. Các ngoại lệ hiện tại:
 - TypeScript 6: Nest CLI và typescript-eslint chưa hỗ trợ TS 7.

@@ -43,7 +43,9 @@ erDiagram
 | `exam_questions` | Liên kết đề và câu | Khóa chính (`exam_id`, `question_id`), `position` duy nhất trong đề |
 | `attempts` | Một lượt làm bài | `status`, `started_at`, `expires_at`, `submitted_at`, `auto_submitted`, `correct_count`, `total_questions`, `estimated_score` |
 | `answers` | Câu trả lời trong một lượt | Khóa chính (`attempt_id`, `question_id`), `selected_option`, `is_flagged`, `is_correct` |
-| `ai_explanations` | Lời giải thích AI, **chưa dùng** cho tới B7 | Duy nhất theo (`question_id`, `selected_option`, `prompt_version`), `content`, `model`, `helpful_count`, `not_helpful_count` |
+| `ai_explanations` | Cache lời giải thích AI | Duy nhất theo (`question_id`, `selected_option`, `prompt_version`), `content`, `model`, `helpful_count`, `not_helpful_count` |
+| `ai_usage` | Số lượt gọi AI mỗi ngày | Khóa chính (`user_id`, `date`), `count`; ngày theo giờ Việt Nam |
+| `ai_explanation_feedback` | Phản hồi hữu ích hay không | Khóa chính (`explanation_id`, `user_id`), `helpful` |
 
 ## 5. Quan hệ
 - `topics` 1-n `questions`: mỗi câu có đúng một chủ đề, nhờ đó thống kê điểm yếu không bị đếm trùng.
@@ -63,6 +65,8 @@ erDiagram
 - **Phiên làm bài:** phòng thi gọi `POST /auth/refresh` định kỳ, vì đề có thể dài hơn thời hạn token.
 - **Điểm ước lượng:** `max(5, round(495 × đúng / tổng ÷ 5) × 5)`. Đây là quy đổi tuyến tính, không phải bảng điểm chính thức của ETS.
 
+- **Giải thích bằng AI:** gọi REST của Gemini bằng `fetch`, prompt nằm ở `backend/prompts`. Đầu ra luôn được kiểm tra lại. Lỗi 429, 500, 503 được thử lại tối đa 2 lần; đầu ra sai định dạng thử lại 1 lần. Lượt trong ngày tăng bằng một câu SQL nguyên tử và được hoàn khi gọi thất bại.
+
 ## 7. Module backend
 | Module | Trách nhiệm |
 |---|---|
@@ -73,6 +77,7 @@ erDiagram
 | `stats` | Thống kê học viên |
 | `recommendations` | Gợi ý ôn tập |
 | `teacher-stats` | Thống kê giáo viên |
+| `ai` | Gọi Gemini, cache, giới hạn lượt, phản hồi |
 
 ## 8. API theo màn hình
 Tiền tố `/api`. Đặc tả đầy đủ trong [`openapi.yaml`](openapi.yaml).
@@ -83,7 +88,7 @@ Tiền tố `/api`. Đặc tả đầy đủ trong [`openapi.yaml`](openapi.yaml
 | Trang chủ học viên | `GET /stats/me/overview`, `GET /stats/me/topics`, `GET /attempts` |
 | Danh sách đề | `GET /exams`, `POST /exams/{id}/attempts` |
 | Phòng thi | `GET /attempts/{id}`, `PUT /attempts/{id}/answers`, `POST /attempts/{id}/submit` |
-| Kết quả | `GET /attempts/{id}/result` |
+| Kết quả | `GET /attempts/{id}/result`, `POST /attempts/{id}/questions/{questionId}/explanation`, `POST /ai-explanations/{id}/feedback` |
 | Điểm yếu và gợi ý | `GET /stats/me/topics`, `GET /stats/me/trend`, `GET /recommendations`, `POST /recommendations/review-sets` |
 | Ngân hàng câu hỏi | `GET, POST /questions`, `GET, PATCH, DELETE /questions/{id}`, tương tự `/passages`, `GET, POST /topics` |
 | Tạo đề | `POST /exams`, `POST /exams/random`, `GET, PATCH, DELETE /exams/{id}`, `POST /exams/{id}/publish` |

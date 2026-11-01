@@ -8,7 +8,7 @@ Hệ thống luyện thi TOEIC Reading có AI giải thích và gợi ý ôn t�
 - **Backend**: NestJS
 - **Cơ sở dữ liệu**: PostgreSQL, Prisma
 - **Xác thực**: JWT
-- **AI**: chưa chốt nhà cung cấp; B7 và B10 đang hoãn, `ai_explanations` chưa dùng
+- **AI**: Google Gemini qua REST, prompt ở `backend/prompts`, cấu hình bằng `GEMINI_API_KEY`, `GEMINI_MODEL`
 
 ## Tài liệu
 | File | Nội dung |
@@ -86,3 +86,4 @@ Bản production: https://luyenthitoeic-delta.vercel.app. Chi tiết ở `docs/D
 Dùng bản ổn định mới nhất. Các ngoại lệ hiện tại:
 - TypeScript 6: Nest CLI và typescript-eslint chưa hỗ trợ TS 7.
 - Prisma 7: tag `latest` của gói `prisma` đang là bản rc của Prisma 8.
+- Gemini 3.5 Flash: các bản mới hơn không phản hồi hoặc quá tải khi đo ngày 2026-11-01.

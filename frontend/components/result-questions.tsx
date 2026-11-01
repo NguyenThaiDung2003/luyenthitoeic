@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { OPTION_KEYS, PART_LABELS, type ResultQuestion } from "@/lib/types";
+import { AiExplanation } from "./ai-explanation";
 import { Icon } from "./icon";
 import { Card } from "./ui";
 
 type Filter = "all" | "wrong";
 
-export function ResultQuestions({ questions }: { questions: ResultQuestion[] }) {
+export function ResultQuestions({ attemptId, questions }: { attemptId: string; questions: ResultQuestion[] }) {
   const [filter, setFilter] = useState<Filter>("wrong");
   const wrongCount = questions.filter((question) => !question.isCorrect).length;
   const visible = filter === "wrong" ? questions.filter((question) => !question.isCorrect) : questions;
@@ -79,11 +80,8 @@ export function ResultQuestions({ questions }: { questions: ResultQuestion[] }) 
                 <span>{question.explanation}</span>
               </p>
             )}
-            {/* Giải thích bằng AI thuộc B7, chưa triển khai */}
-            {!question.isCorrect && (
-              <p className="mt-2 flex items-center gap-2 text-body-subtle text-on-surface-variant">
-                <Icon name="auto_awesome" /> Giải thích bằng AI chưa khả dụng.
-              </p>
+            {!question.isCorrect && question.selectedOption !== null && (
+              <AiExplanation attemptId={attemptId} questionId={question.id} />
             )}
           </li>
         ))}

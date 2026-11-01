@@ -1,5 +1,19 @@
 # Nhật ký phát triển
 
+## 2026-11-01: B7, B10. AI giải thích đáp án và bộ đánh giá
+
+**Đã làm**
+- Module `ai` gọi Gemini bằng REST, không thêm thư viện. Prompt tách ra `backend/prompts`.
+- Cache theo câu hỏi, đáp án chọn và phiên bản prompt; giới hạn lượt mỗi ngày; phản hồi hữu ích.
+- Thêm hai bảng `ai_usage`, `ai_explanation_feedback`.
+- Nút giải thích trên trang kết quả.
+- Script sinh, xuất CSV và tính điểm cho chương thực nghiệm.
+
+**Quyết định**
+- Dùng `gemini-3.5-flash` thay vì bản mới nhất, vì đo thực tế các bản 3.6 đến 3.8 không dùng được.
+- Thêm thử lại lỗi 429, 500, 503 vì đo thực tế 2/3 lần gọi đầu bị 503.
+- Migration sinh bằng `prisma migrate diff`, vì `migrate dev` đòi reset CSDL dev do checksum `init` lệch theo ký tự xuống dòng.
+
 ## 2026-11-01: Deploy production
 
 **Đã làm**

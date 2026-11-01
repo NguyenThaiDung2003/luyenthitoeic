@@ -22,7 +22,10 @@
     "dev": "nest start --watch",
     "seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
-    "import:questions": "tsx scripts/import-questions.ts"
+    "import:questions": "tsx scripts/import-questions.ts",
+    "ai-eval:generate": "tsx scripts/generate-ai-eval.ts",
+    "ai-eval:export": "tsx scripts/export-ai-eval.ts",
+    "ai-eval:score": "tsx scripts/score-ai-eval.ts"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.1",

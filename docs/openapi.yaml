@@ -278,6 +278,40 @@ paths:
         '200': { description: Kết quả }
         '403': { $ref: '#/components/responses/Forbidden' }
         '409': { description: Bài chưa nộp }
+  /attempts/{id}/questions/{questionId}/explanation:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+      - { name: questionId, in: path, required: true, schema: { type: string, format: uuid } }
+    post:
+      tags: [attempts]
+      summary: Giải thích bằng AI cho câu chọn sai trong bài đã nộp
+      responses:
+        '200': { description: Lời giải thích }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { description: Bài chưa nộp }
+        '422': { description: Câu đúng hoặc câu bỏ trống }
+        '429': { description: Hết lượt trong ngày }
+        '503': { description: AI chưa cấu hình hoặc đang bận }
+  /ai-explanations/{id}/feedback:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+    post:
+      tags: [attempts]
+      summary: Đánh giá lời giải thích, mỗi người một phiếu
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [helpful]
+              properties:
+                helpful: { type: boolean }
+      responses:
+        '200': { description: Đã ghi nhận }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /stats/me/overview:
     get:
       tags: [stats]

@@ -59,6 +59,12 @@ Trình duyệt chỉ gọi tên miền Vercel, nên cookie đăng nhập là coo
 | `AUTH_RATE_LIMIT` | Không | Mặc định 10 lần mỗi phút |
 | `GLOBAL_RATE_LIMIT` | Không | Mặc định 300 lần mỗi phút |
 | `SEED_TEACHER_EMAIL`, `SEED_TEACHER_PASSWORD` | Khi seed | Mật khẩu ít nhất 12 ký tự |
+| `GEMINI_API_KEY` | Để bật AI | Tạo ở Google AI Studio; thiếu thì nút AI báo chưa cấu hình |
+| `GEMINI_MODEL` | Để bật AI | Đang dùng `gemini-3.5-flash` |
+| `AI_PROMPT_VERSION` | Không | Tên tệp trong `backend/prompts`, mặc định `explanation-v1` |
+| `AI_DAILY_LIMIT` | Không | Mặc định 20 lượt mỗi học viên mỗi ngày |
+
+**Chọn model:** ngày 2026-11-01, `gemini-3.8-flash` và `gemini-flash-latest` không phản hồi sau 40 đến 75 giây, `gemini-3.7-flash` và `gemini-3.6-flash` trả 503. `gemini-3.5-flash` phản hồi trong vài giây nhưng vẫn có lúc trả 503, nên client tự thử lại. Đo lại trước khi đổi model.
 
 **`TRUST_PROXY_HOPS`** là số proxy đứng trước backend, dùng để lấy đúng IP cho giới hạn tốc độ:
 - VPS: `2` (reverse proxy, Next.js).

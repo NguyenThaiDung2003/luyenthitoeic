@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { AiModule } from './ai/ai.module.js';
 import { AttemptsModule } from './attempts/attempts.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ExamsModule } from './exams/exams.module.js';
@@ -22,6 +23,7 @@ import { TopicsController } from './topics/topics.controller.js';
     StatsModule,
     RecommendationsModule,
     TeacherStatsModule,
+    AiModule,
     ThrottlerModule.forRoot([
       { ttl: 60_000, limit: () => Number(process.env.GLOBAL_RATE_LIMIT ?? 300) },
     ]),

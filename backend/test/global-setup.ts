@@ -9,5 +9,7 @@ export default function setup() {
   process.env.DATABASE_URL = url;
   process.env.JWT_SECRET = 'test-secret-chi-dung-trong-test';
   process.env.JWT_EXPIRES_IN_SECONDS = '3600';
+  process.env.AUTH_RATE_LIMIT = '100000';
+  process.env.GLOBAL_RATE_LIMIT = '100000';
   execSync('npx prisma migrate deploy', { stdio: 'pipe', env: process.env });
 }

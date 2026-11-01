@@ -1,5 +1,15 @@
 # Nhật ký phát triển
 
+## 2026-11-01: B13. Báo cáo
+
+**Đã làm**
+- Viết bản nháp 6 chương trong `report/` và danh sách nguồn cần tìm.
+
+**Quyết định**
+- Dùng cấu trúc đồ án phổ biến vì `report/` chưa có mẫu của trường.
+- Số liệu kiểm thử lấy từ lần chạy thật: 167 test backend, 16 test frontend, độ phủ dòng lệnh backend 93,05%.
+- Không tự tạo tài liệu tham khảo; phần chưa có dùng các nhãn `[CẦN SỐ LIỆU]`, `[CHƯA TRIỂN KHAI]`, `[CẦN TRÍCH DẪN]`, `[CẦN BỔ SUNG]`.
+
 ## 2026-11-01: B12. Triển khai
 
 **Đã làm**

@@ -10,9 +10,15 @@
 - Script sinh, xuất CSV và tính điểm cho chương thực nghiệm.
 
 **Quyết định**
-- Dùng `gemini-3.5-flash` thay vì bản mới nhất, vì đo thực tế các bản 3.6 đến 3.8 không dùng được.
-- Thêm thử lại lỗi 429, 500, 503 vì đo thực tế 2/3 lần gọi đầu bị 503.
+- Không dùng bản mới nhất vì đo thực tế các bản 3.6 đến 3.8 không dùng được.
+- Production dùng `gemini-3.5-flash-lite`, bộ đánh giá dùng `gemini-3.5-flash` để không tranh hạn mức.
+- Thử lại lỗi 500, 503 vì đo thực tế 2/3 lần gọi đầu bị 503.
+- Lỗi 429 dừng ngay và báo riêng.
 - Migration sinh bằng `prisma migrate diff`, vì `migrate dev` đòi reset CSDL dev do checksum `init` lệch theo ký tự xuống dòng.
+
+**Sự cố**
+- Chạy sinh dữ liệu đánh giá làm hết 20 lượt mỗi ngày của `gemini-3.5-flash`, cùng khóa với production, nên nút AI lỗi cho tới khi đổi model. Script nay dừng ngay khi hết hạn mức.
+- Mới có 11/60 lời giải thích cho B10. Chạy lại `npm run ai-eval:generate -- <phiên-bản>` sau khi hạn mức được cấp lại; script bỏ qua các tổ hợp đã có.
 
 ## 2026-11-01: Deploy production
 

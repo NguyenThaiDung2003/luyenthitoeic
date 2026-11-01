@@ -65,7 +65,7 @@ erDiagram
 - **Phiên làm bài:** phòng thi gọi `POST /auth/refresh` định kỳ, vì đề có thể dài hơn thời hạn token.
 - **Điểm ước lượng:** `max(5, round(495 × đúng / tổng ÷ 5) × 5)`. Đây là quy đổi tuyến tính, không phải bảng điểm chính thức của ETS.
 
-- **Giải thích bằng AI:** gọi REST của Gemini bằng `fetch`, prompt nằm ở `backend/prompts`. Đầu ra luôn được kiểm tra lại. Lỗi 429, 500, 503 được thử lại tối đa 2 lần; đầu ra sai định dạng thử lại 1 lần. Lượt trong ngày tăng bằng một câu SQL nguyên tử và được hoàn khi gọi thất bại.
+- **Giải thích bằng AI:** gọi REST của Gemini bằng `fetch`, prompt nằm ở `backend/prompts`. Đầu ra luôn được kiểm tra lại. Lỗi 500, 503 được thử lại tối đa 2 lần; lỗi 429 dừng ngay vì là hết hạn mức; đầu ra sai định dạng thử lại 1 lần. Lượt trong ngày tăng bằng một câu SQL nguyên tử và được hoàn khi gọi thất bại.
 
 ## 7. Module backend
 | Module | Trách nhiệm |

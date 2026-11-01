@@ -14,8 +14,8 @@ Người tự luyện TOEIC Reading thường gặp ba khó khăn. Thứ nhất,
 | Chấm điểm tự động, thống kê điểm yếu theo chủ đề | Đã hoàn thành |
 | Gợi ý bộ ôn tập dựa trên kết quả của từng học viên | Đã hoàn thành (theo luật) |
 | Công cụ cho giáo viên: ngân hàng câu hỏi, tạo đề, thống kê | Đã hoàn thành |
-| Giải thích đáp án bằng AI | `[CHƯA TRIỂN KHAI]` |
-| Đánh giá chất lượng giải thích của AI | `[CHƯA TRIỂN KHAI]` |
+| Giải thích đáp án bằng AI | Đã hoàn thành |
+| Đánh giá chất lượng giải thích của AI | Đã có bộ công cụ, chờ chấm tay `[CẦN SỐ LIỆU]` |
 
 ## 1.3. Đối tượng sử dụng
 - **Học viên:** người đang luyện thi TOEIC Reading.

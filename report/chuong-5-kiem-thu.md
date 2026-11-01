@@ -16,11 +16,11 @@ Test tích hợp dùng cơ sở dữ liệu thật thay vì giả lập, vì cá
 ## 5.2. Kết quả tự động
 | Hạng mục | Kết quả |
 |---|---|
-| Test backend | 168/168 đạt, 11 tệp |
-| Test frontend | 16/16 đạt, 3 tệp |
-| Độ phủ backend, theo dòng lệnh | 93,1% (513/551) |
-| Độ phủ backend, theo nhánh | 76,87% (246/320) |
-| Độ phủ backend, theo hàm | 93,44% (171/183) |
+| Test backend | 215/215 đạt, 13 tệp |
+| Test frontend | 20/20 đạt, 4 tệp |
+| Độ phủ backend, theo dòng lệnh | 94,62% (686/725) |
+| Độ phủ backend, theo nhánh | 79,52% (338/425) |
+| Độ phủ backend, theo hàm | 94,39% (219/232) |
 | `npm audit --omit=dev` | 0 lỗ hổng ở cả hai phía |
 
 Độ phủ chỉ đo mã backend tự viết, không tính mã Prisma sinh tự động. Độ phủ frontend chưa được đo.
@@ -29,10 +29,12 @@ Test tích hợp dùng cơ sở dữ liệu thật thay vì giả lập, vì cá
 
 | Tệp | Số test | Nội dung |
 |---|---|---|
-| `security.e2e-spec.ts` | 77 | Quyền từng endpoint, lộ đáp án, lỗi, CORS |
+| `security.e2e-spec.ts` | 81 | Quyền từng endpoint, lộ đáp án, lỗi, CORS |
+| `ai-units.spec.ts` | 27 | Client Gemini, kiểm tra đầu ra, prompt, CSV, tính điểm |
 | `exams.e2e-spec.ts` | 21 | Tạo đề, làm bài, nộp trùng, hết giờ |
 | `recommend.spec.ts` | 15 | Thuật toán gợi ý với dữ liệu giả |
 | `auth.e2e-spec.ts` | 15 | Đăng ký, đăng nhập, token, phân quyền |
+| `ai.e2e-spec.ts` | 16 | Giải thích AI, cache, giới hạn lượt, phản hồi |
 | `insights.e2e-spec.ts` | 8 | Gợi ý và thống kê giáo viên |
 | `scoring.spec.ts` | 8 | Tính điểm |
 | `import-validator.spec.ts` | 8 | Kiểm tra dữ liệu nạp |
@@ -85,7 +87,11 @@ Còn 3 vấn đề mức trung bình chưa sửa: giới hạn theo email có th
 Đây là rà soát do chính nhóm phát triển thực hiện, không phải kiểm thử xâm nhập độc lập.
 
 ## 5.6. Đánh giá chất lượng giải thích AI
-`[CHƯA TRIỂN KHAI]` Thực hiện sau B7 và B10: lấy 50 đến 100 lời giải thích, chấm tay theo rubric (đúng nội dung, dễ hiểu, hữu ích, thang 1 đến 5), so sánh giữa các cấu hình prompt.
+Phương pháp: sinh lời giải thích cho mọi tổ hợp câu hỏi và đáp án sai bằng hai phiên bản prompt, lấy ngẫu nhiên 50 đến 100 mẫu ra CSV, chấm tay theo rubric (đúng nội dung, dễ hiểu, hữu ích, thang 1 đến 5), rồi tính điểm trung bình theo từng phiên bản bằng `npm run ai-eval:score`.
+
+Trạng thái ngày 2026-11-01: mới sinh được 11 trên 60 lời giải thích (10 của prompt v1, 1 của prompt v2) vì gói miễn phí giới hạn 20 lượt gọi mỗi ngày trên một model. Chưa có điểm chấm.
+
+Quan sát định tính, chưa phải kết quả đánh giá: trong các lần thử, mô hình trích đúng dẫn chứng từ đoạn văn, nhưng có một lời giải thích đưa ra suy luận yếu. Điều này cho thấy cần chấm tiêu chí đúng nội dung thay vì chỉ tin vào định dạng hợp lệ.
 
 `[CẦN SỐ LIỆU: bảng điểm trung bình theo từng cấu hình]`
 

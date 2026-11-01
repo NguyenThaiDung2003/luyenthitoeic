@@ -10,9 +10,10 @@ Hệ thống đã có đủ luồng luyện thi cho học viên và công cụ c
 - Chấm điểm một lần, không lộ đáp án trước khi nộp.
 - Thống kê điểm yếu, xu hướng, gợi ý bộ ôn tập theo luật.
 - Thống kê cho giáo viên.
+- Giải thích câu sai bằng Gemini, có cache, giới hạn lượt và phản hồi của người học.
 - Đóng gói Docker và triển khai tại https://luyenthitoeic-delta.vercel.app.
 
-Về kỹ thuật, 184 test tự động đều đạt và độ phủ dòng lệnh backend đạt 93,1%.
+Về kỹ thuật, 235 test tự động đều đạt và độ phủ dòng lệnh backend đạt 94,62%.
 
 ## 6.2. Đóng góp
 - Một phòng thi trực tuyến xử lý đúng các tình huống đồng thời: nộp trùng, hết giờ, mất mạng.
@@ -21,7 +22,8 @@ Về kỹ thuật, 184 test tự động đều đạt và độ phủ dòng l�
 `[CẦN BỔ SUNG: đóng góp về mặt giáo dục sau khi có số liệu thực nghiệm]`
 
 ## 6.3. Hạn chế
-- **Chưa có tính năng AI giải thích đáp án.** Đây là phần được nêu trong tên đề tài. `[CHƯA TRIỂN KHAI]`
+- Chất lượng giải thích của AI chưa có kết quả chấm tay. `[CẦN SỐ LIỆU]`
+- Hệ thống phụ thuộc vào Gemini: dịch vụ có lúc quá tải, và gói miễn phí có hạn mức theo ngày cho toàn hệ thống.
 - Ngân hàng chỉ có 10 câu mẫu tự soạn.
 - Chưa thử nghiệm với người dùng thật. Bản triển khai dùng gói miễn phí nên chưa phù hợp để vận hành lâu dài.
 - Điểm ước lượng là tuyến tính, không tương ứng với điểm TOEIC chính thức.
@@ -31,7 +33,7 @@ Về kỹ thuật, 184 test tự động đều đạt và độ phủ dòng l�
 - Còn các vấn đề bảo mật mức trung bình nêu ở chương 5.
 
 ## 6.4. Hướng phát triển
-1. Hoàn thành giải thích bằng AI và bộ đánh giá chất lượng (B7, B10).
+1. Hoàn tất chấm tay bộ đánh giá AI và cải tiến prompt theo kết quả.
 2. Mở rộng ngân hàng câu hỏi có giấy phép rõ ràng.
 3. Thêm lớp học để giáo viên theo dõi theo nhóm.
 4. Thêm khôi phục mật khẩu và thu hồi token khi đăng xuất.

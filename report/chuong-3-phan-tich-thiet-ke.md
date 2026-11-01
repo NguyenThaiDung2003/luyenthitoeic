@@ -14,7 +14,7 @@ Yêu cầu được suy ra từ 11 màn hình thiết kế trong `/design`, chi 
 | F7 | Xem thống kê điểm yếu và xu hướng 5 lần gần nhất | Học viên |
 | F8 | Nhận và làm bộ ôn tập gợi ý | Học viên |
 | F9 | Xem thống kê tổng hợp, câu hay sai, học viên cần hỗ trợ | Giáo viên |
-| F10 | Giải thích đáp án bằng AI | `[CHƯA TRIỂN KHAI]` |
+| F10 | Giải thích câu chọn sai bằng AI, phản hồi hữu ích hay không | Học viên |
 
 ## 3.2. Yêu cầu phi chức năng
 - **Bảo mật:** băm mật khẩu, kiểm tra quyền ở backend trên từng endpoint, không lộ đáp án trước khi nộp.
@@ -51,9 +51,10 @@ Backend chia thành các module:
 | `stats` | Thống kê học viên |
 | `recommendations` | Gợi ý ôn tập |
 | `teacher-stats` | Thống kê giáo viên |
+| `ai` | Gọi Gemini, cache, giới hạn lượt, phản hồi |
 
 ## 3.5. Thiết kế cơ sở dữ liệu
-Hệ thống có 9 bảng.
+Hệ thống có 11 bảng.
 
 ```mermaid
 erDiagram
@@ -67,6 +68,9 @@ erDiagram
   attempts ||--o{ answers : "có"
   questions ||--o{ answers : "được trả lời"
   questions ||--o{ ai_explanations : "được giải thích"
+  ai_explanations ||--o{ ai_explanation_feedback : "được đánh giá"
+  users ||--o{ ai_explanation_feedback : "đánh giá"
+  users ||--o{ ai_usage : "dùng"
 ```
 
 | Bảng | Vai trò |
@@ -79,14 +83,16 @@ erDiagram
 | `exam_questions` | Liên kết đề với câu hỏi, giữ thứ tự |
 | `attempts` | Một lượt làm bài, thời hạn, kết quả |
 | `answers` | Câu trả lời trong một lượt |
-| `ai_explanations` | Lời giải thích AI, chưa dùng tới |
+| `ai_explanations` | Cache lời giải thích AI theo câu hỏi, đáp án chọn và phiên bản prompt |
+| `ai_usage` | Số lượt gọi AI mỗi ngày của từng người dùng |
+| `ai_explanation_feedback` | Phiếu đánh giá hữu ích, mỗi người một phiếu |
 
 Một số ràng buộc nằm trực tiếp ở cơ sở dữ liệu thay vì chỉ ở ứng dụng:
 - `CHECK (cardinality(options) = 4)` bảo đảm mọi câu có đúng 4 lựa chọn.
 - Chỉ mục duy nhất một phần trên (`user_id`, `exam_id`) khi `status = 'IN_PROGRESS'` bảo đảm chỉ có một lượt đang làm, kể cả khi hai yêu cầu đến cùng lúc.
 
 ## 3.6. Thiết kế API
-API theo kiểu REST với tiền tố `/api`, gồm 40 endpoint. Đặc tả đầy đủ tại `docs/openapi.yaml`.
+API theo kiểu REST với tiền tố `/api`, gồm 42 endpoint. Đặc tả đầy đủ tại `docs/openapi.yaml`.
 
 | Nhóm | Số endpoint | Vai trò |
 |---|---|---|
@@ -96,6 +102,7 @@ API theo kiểu REST với tiền tố `/api`, gồm 40 endpoint. Đặc tả đ
 | Làm bài | 6 | Học viên |
 | Thống kê học viên, gợi ý | 5 | Học viên |
 | Thống kê giáo viên | 4 | Giáo viên |
+| Giải thích bằng AI | 2 | Học viên |
 
 ## 3.7. Thiết kế giao diện
 Giao diện theo hệ thiết kế trong `design/DESIGN.md` với 11 màn hình. Bản cài đặt lược bỏ các phần ngoài phạm vi như đăng nhập Google, quên mật khẩu, lớp học, chuỗi ngày học, và không dùng số liệu minh họa của thiết kế.

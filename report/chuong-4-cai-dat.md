@@ -71,7 +71,17 @@ Ví dụ: ba chủ đề có tỷ lệ sai 80%, 60%, 20%. Phần chia là 5,0; 3
 Các ngưỡng 50% và 75% là lựa chọn thiết kế, chưa được kiểm chứng bằng thực nghiệm. `[CẦN SỐ LIỆU]`
 
 ## 4.8. Giải thích bằng AI
-`[CHƯA TRIỂN KHAI]` Hiện tại trang kết quả hiển thị giải thích do người soạn nhập sẵn, kèm thông báo tính năng AI chưa khả dụng. Bảng `ai_explanations` đã có sẵn cho bước này.
+Học viên bấm nút trên câu chọn sai ở trang kết quả để nhận lời giải thích gồm bốn phần: vì sao đáp án đúng, vì sao lựa chọn sai, điểm cần nhớ, và một ví dụ tương tự. Module `ai` cài đặt tại `backend/src/ai`, prompt tách riêng tại `backend/prompts` để sửa không cần đổi mã.
+
+Luồng xử lý:
+
+1. Kiểm tra lượt làm bài thuộc về học viên, đã nộp, và câu đó chọn sai. Câu bỏ trống dùng giải thích soạn sẵn.
+2. Tìm trong `ai_explanations` theo câu hỏi, đáp án chọn và phiên bản prompt. Có sẵn thì trả ngay, không tốn lượt và không gọi API.
+3. Giữ một lượt trong ngày bằng một câu SQL `INSERT ... ON CONFLICT DO UPDATE ... WHERE count < limit`, nên gọi đồng thời không vượt được giới hạn.
+4. Gọi Gemini, yêu cầu trả JSON theo schema. Đầu ra được kiểm tra lại, sai định dạng hoặc quá dài thì thử lại một lần.
+5. Lưu kết quả. Nếu thất bại thì hoàn lượt và báo lỗi, lời giải soạn sẵn vẫn hiển thị.
+
+Mô hình chọn bằng biến môi trường. Khi đo ngày 2026-11-01, các bản 3.6 đến 3.8 không phản hồi hoặc báo quá tải. Bản `gemini-3.5-flash` hoạt động nhưng gói miễn phí chỉ cho 20 lượt gọi mỗi ngày trên một model, nên bản triển khai dùng `gemini-3.5-flash-lite`, phản hồi khoảng 2 giây. Client thử lại tối đa hai lần với lỗi 500 và 503, còn lỗi 429 thì dừng ngay vì thử lại chỉ tốn thêm lượt. Không có thông tin học viên nào được gửi tới Gemini.
 
 ## 4.9. Triển khai
 Dự án có Dockerfile nhiều giai đoạn cho backend và frontend, chạy bằng người dùng không phải root, và `docker-compose.prod.yml` cho VPS. Hướng dẫn tại `docs/DEPLOYMENT.md`.

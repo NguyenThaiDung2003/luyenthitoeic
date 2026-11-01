@@ -16,13 +16,13 @@ Số chỗ đánh dấu trong từng chương, chưa tính trang tiêu đề ở
 
 | Chương | CẦN SỐ LIỆU | CHƯA TRIỂN KHAI | CẦN TRÍCH DẪN | CẦN BỔ SUNG |
 |---|---|---|---|---|
-| Chương 1 | 1 | 2 | 1 | 1 |
-| Chương 2 | 0 | 1 | 7 | 0 |
-| Chương 3 | 0 | 1 | 0 | 1 |
-| Chương 4 | 1 | 1 | 0 | 0 |
-| Chương 5 | 3 | 1 | 0 | 0 |
-| Chương 6 | 0 | 1 | 0 | 1 |
-| **Tổng** | **5** | **7** | **8** | **3** |
+| Chương 1 | 2 | 0 | 1 | 1 |
+| Chương 2 | 0 | 0 | 9 | 0 |
+| Chương 3 | 0 | 0 | 0 | 1 |
+| Chương 4 | 1 | 0 | 0 | 0 |
+| Chương 5 | 3 | 0 | 0 | 0 |
+| Chương 6 | 1 | 0 | 0 | 1 |
+| **Tổng** | **7** | **0** | **10** | **3** |
 
 ## Mục lục
 - [Chương 1. Tổng quan đề tài](#chương-1-tổng-quan-đề-tài)
@@ -51,8 +51,8 @@ Người tự luyện TOEIC Reading thường gặp ba khó khăn. Thứ nhất,
 | Chấm điểm tự động, thống kê điểm yếu theo chủ đề | Đã hoàn thành |
 | Gợi ý bộ ôn tập dựa trên kết quả của từng học viên | Đã hoàn thành (theo luật) |
 | Công cụ cho giáo viên: ngân hàng câu hỏi, tạo đề, thống kê | Đã hoàn thành |
-| Giải thích đáp án bằng AI | `[CHƯA TRIỂN KHAI]` |
-| Đánh giá chất lượng giải thích của AI | `[CHƯA TRIỂN KHAI]` |
+| Giải thích đáp án bằng AI | Đã hoàn thành |
+| Đánh giá chất lượng giải thích của AI | Đã có bộ công cụ, chờ chấm tay `[CẦN SỐ LIỆU]` |
 
 ## 1.3. Đối tượng sử dụng
 - **Học viên:** người đang luyện thi TOEIC Reading.
@@ -94,7 +94,11 @@ Phần Reading của bài thi TOEIC gồm 100 câu trắc nghiệm làm trong 75
 Viết phần này sau khi có nguồn thật. Nội dung cần làm rõ: vì sao phản hồi ngay sau bài làm giúp người học, và vì sao ôn theo điểm yếu hiệu quả hơn làm đề tràn lan.
 
 ## 2.3. Mô hình ngôn ngữ lớn trong giải thích đáp án
-`[CHƯA TRIỂN KHAI]` Viết khi hoàn thành B7: giới thiệu mô hình ngôn ngữ lớn, cách thiết kế prompt, đầu ra có cấu trúc, rủi ro nội dung sai.
+Mô hình ngôn ngữ lớn là mô hình sinh văn bản từ một đoạn nhập gọi là prompt `[CẦN TRÍCH DẪN]`. Đề tài dùng Google Gemini qua API. Ba khái niệm liên quan trực tiếp tới hệ thống:
+
+- **Thiết kế prompt:** nêu vai trò, nhiệm vụ, giới hạn độ dài và dữ liệu đầu vào. Prompt thay đổi có thể làm chất lượng đầu ra thay đổi, nên hệ thống lưu phiên bản prompt cùng kết quả.
+- **Đầu ra có cấu trúc:** yêu cầu mô hình trả JSON theo schema để ứng dụng xử lý được từng phần.
+- **Rủi ro nội dung sai:** mô hình có thể đưa ra thông tin không chính xác `[CẦN TRÍCH DẪN]`. Vì vậy hệ thống cung cấp sẵn đáp án đúng cho mô hình, ghi rõ nội dung do AI tạo, và thu phản hồi của người học.
 
 ## 2.4. Công nghệ sử dụng
 Phiên bản dưới đây đọc từ `node_modules` của dự án ngày 2026-11-01.
@@ -109,6 +113,7 @@ Phiên bản dưới đây đọc từ `node_modules` của dự án ngày 2026-
 | Cơ sở dữ liệu | PostgreSQL | 18 | Lưu trữ quan hệ |
 | Truy cập dữ liệu | Prisma | 7.10.1 | Schema, migration, truy vấn |
 | Băm mật khẩu | bcrypt | 6.0.0 | Lưu mật khẩu an toàn |
+| AI | Google Gemini | gemini-3.5-flash-lite | Sinh lời giải thích đáp án |
 | Kiểm thử | Vitest, Supertest, Testing Library | 4.1.12 và 5.0.5 | Test đơn vị và tích hợp |
 | Đóng gói | Docker, Docker Compose | | Chạy CSDL và triển khai |
 
@@ -141,7 +146,7 @@ Yêu cầu được suy ra từ 11 màn hình thiết kế trong `/design`, chi 
 | F7 | Xem thống kê điểm yếu và xu hướng 5 lần gần nhất | Học viên |
 | F8 | Nhận và làm bộ ôn tập gợi ý | Học viên |
 | F9 | Xem thống kê tổng hợp, câu hay sai, học viên cần hỗ trợ | Giáo viên |
-| F10 | Giải thích đáp án bằng AI | `[CHƯA TRIỂN KHAI]` |
+| F10 | Giải thích câu chọn sai bằng AI, phản hồi hữu ích hay không | Học viên |
 
 ## 3.2. Yêu cầu phi chức năng
 - **Bảo mật:** băm mật khẩu, kiểm tra quyền ở backend trên từng endpoint, không lộ đáp án trước khi nộp.
@@ -178,9 +183,10 @@ Backend chia thành các module:
 | `stats` | Thống kê học viên |
 | `recommendations` | Gợi ý ôn tập |
 | `teacher-stats` | Thống kê giáo viên |
+| `ai` | Gọi Gemini, cache, giới hạn lượt, phản hồi |
 
 ## 3.5. Thiết kế cơ sở dữ liệu
-Hệ thống có 9 bảng.
+Hệ thống có 11 bảng.
 
 ```mermaid
 erDiagram
@@ -194,6 +200,9 @@ erDiagram
   attempts ||--o{ answers : "có"
   questions ||--o{ answers : "được trả lời"
   questions ||--o{ ai_explanations : "được giải thích"
+  ai_explanations ||--o{ ai_explanation_feedback : "được đánh giá"
+  users ||--o{ ai_explanation_feedback : "đánh giá"
+  users ||--o{ ai_usage : "dùng"
 ```
 
 | Bảng | Vai trò |
@@ -206,14 +215,16 @@ erDiagram
 | `exam_questions` | Liên kết đề với câu hỏi, giữ thứ tự |
 | `attempts` | Một lượt làm bài, thời hạn, kết quả |
 | `answers` | Câu trả lời trong một lượt |
-| `ai_explanations` | Lời giải thích AI, chưa dùng tới |
+| `ai_explanations` | Cache lời giải thích AI theo câu hỏi, đáp án chọn và phiên bản prompt |
+| `ai_usage` | Số lượt gọi AI mỗi ngày của từng người dùng |
+| `ai_explanation_feedback` | Phiếu đánh giá hữu ích, mỗi người một phiếu |
 
 Một số ràng buộc nằm trực tiếp ở cơ sở dữ liệu thay vì chỉ ở ứng dụng:
 - `CHECK (cardinality(options) = 4)` bảo đảm mọi câu có đúng 4 lựa chọn.
 - Chỉ mục duy nhất một phần trên (`user_id`, `exam_id`) khi `status = 'IN_PROGRESS'` bảo đảm chỉ có một lượt đang làm, kể cả khi hai yêu cầu đến cùng lúc.
 
 ## 3.6. Thiết kế API
-API theo kiểu REST với tiền tố `/api`, gồm 40 endpoint. Đặc tả đầy đủ tại `docs/openapi.yaml`.
+API theo kiểu REST với tiền tố `/api`, gồm 42 endpoint. Đặc tả đầy đủ tại `docs/openapi.yaml`.
 
 | Nhóm | Số endpoint | Vai trò |
 |---|---|---|
@@ -223,6 +234,7 @@ API theo kiểu REST với tiền tố `/api`, gồm 40 endpoint. Đặc tả đ
 | Làm bài | 6 | Học viên |
 | Thống kê học viên, gợi ý | 5 | Học viên |
 | Thống kê giáo viên | 4 | Giáo viên |
+| Giải thích bằng AI | 2 | Học viên |
 
 ## 3.7. Thiết kế giao diện
 Giao diện theo hệ thiết kế trong `design/DESIGN.md` với 11 màn hình. Bản cài đặt lược bỏ các phần ngoài phạm vi như đăng nhập Google, quên mật khẩu, lớp học, chuỗi ngày học, và không dùng số liệu minh họa của thiết kế.
@@ -304,7 +316,17 @@ Ví dụ: ba chủ đề có tỷ lệ sai 80%, 60%, 20%. Phần chia là 5,0; 3
 Các ngưỡng 50% và 75% là lựa chọn thiết kế, chưa được kiểm chứng bằng thực nghiệm. `[CẦN SỐ LIỆU]`
 
 ## 4.8. Giải thích bằng AI
-`[CHƯA TRIỂN KHAI]` Hiện tại trang kết quả hiển thị giải thích do người soạn nhập sẵn, kèm thông báo tính năng AI chưa khả dụng. Bảng `ai_explanations` đã có sẵn cho bước này.
+Học viên bấm nút trên câu chọn sai ở trang kết quả để nhận lời giải thích gồm bốn phần: vì sao đáp án đúng, vì sao lựa chọn sai, điểm cần nhớ, và một ví dụ tương tự. Module `ai` cài đặt tại `backend/src/ai`, prompt tách riêng tại `backend/prompts` để sửa không cần đổi mã.
+
+Luồng xử lý:
+
+1. Kiểm tra lượt làm bài thuộc về học viên, đã nộp, và câu đó chọn sai. Câu bỏ trống dùng giải thích soạn sẵn.
+2. Tìm trong `ai_explanations` theo câu hỏi, đáp án chọn và phiên bản prompt. Có sẵn thì trả ngay, không tốn lượt và không gọi API.
+3. Giữ một lượt trong ngày bằng một câu SQL `INSERT ... ON CONFLICT DO UPDATE ... WHERE count < limit`, nên gọi đồng thời không vượt được giới hạn.
+4. Gọi Gemini, yêu cầu trả JSON theo schema. Đầu ra được kiểm tra lại, sai định dạng hoặc quá dài thì thử lại một lần.
+5. Lưu kết quả. Nếu thất bại thì hoàn lượt và báo lỗi, lời giải soạn sẵn vẫn hiển thị.
+
+Mô hình chọn bằng biến môi trường. Khi đo ngày 2026-11-01, các bản 3.6 đến 3.8 không phản hồi hoặc báo quá tải. Bản `gemini-3.5-flash` hoạt động nhưng gói miễn phí chỉ cho 20 lượt gọi mỗi ngày trên một model, nên bản triển khai dùng `gemini-3.5-flash-lite`, phản hồi khoảng 2 giây. Client thử lại tối đa hai lần với lỗi 500 và 503, còn lỗi 429 thì dừng ngay vì thử lại chỉ tốn thêm lượt. Không có thông tin học viên nào được gửi tới Gemini.
 
 ## 4.9. Triển khai
 Dự án có Dockerfile nhiều giai đoạn cho backend và frontend, chạy bằng người dùng không phải root, và `docker-compose.prod.yml` cho VPS. Hướng dẫn tại `docs/DEPLOYMENT.md`.
@@ -331,11 +353,11 @@ Test tích hợp dùng cơ sở dữ liệu thật thay vì giả lập, vì cá
 ## 5.2. Kết quả tự động
 | Hạng mục | Kết quả |
 |---|---|
-| Test backend | 168/168 đạt, 11 tệp |
-| Test frontend | 16/16 đạt, 3 tệp |
-| Độ phủ backend, theo dòng lệnh | 93,1% (513/551) |
-| Độ phủ backend, theo nhánh | 76,87% (246/320) |
-| Độ phủ backend, theo hàm | 93,44% (171/183) |
+| Test backend | 215/215 đạt, 13 tệp |
+| Test frontend | 20/20 đạt, 4 tệp |
+| Độ phủ backend, theo dòng lệnh | 94,62% (686/725) |
+| Độ phủ backend, theo nhánh | 79,52% (338/425) |
+| Độ phủ backend, theo hàm | 94,39% (219/232) |
 | `npm audit --omit=dev` | 0 lỗ hổng ở cả hai phía |
 
 Độ phủ chỉ đo mã backend tự viết, không tính mã Prisma sinh tự động. Độ phủ frontend chưa được đo.
@@ -344,10 +366,12 @@ Test tích hợp dùng cơ sở dữ liệu thật thay vì giả lập, vì cá
 
 | Tệp | Số test | Nội dung |
 |---|---|---|
-| `security.e2e-spec.ts` | 77 | Quyền từng endpoint, lộ đáp án, lỗi, CORS |
+| `security.e2e-spec.ts` | 81 | Quyền từng endpoint, lộ đáp án, lỗi, CORS |
+| `ai-units.spec.ts` | 27 | Client Gemini, kiểm tra đầu ra, prompt, CSV, tính điểm |
 | `exams.e2e-spec.ts` | 21 | Tạo đề, làm bài, nộp trùng, hết giờ |
 | `recommend.spec.ts` | 15 | Thuật toán gợi ý với dữ liệu giả |
 | `auth.e2e-spec.ts` | 15 | Đăng ký, đăng nhập, token, phân quyền |
+| `ai.e2e-spec.ts` | 16 | Giải thích AI, cache, giới hạn lượt, phản hồi |
 | `insights.e2e-spec.ts` | 8 | Gợi ý và thống kê giáo viên |
 | `scoring.spec.ts` | 8 | Tính điểm |
 | `import-validator.spec.ts` | 8 | Kiểm tra dữ liệu nạp |
@@ -400,7 +424,11 @@ Còn 3 vấn đề mức trung bình chưa sửa: giới hạn theo email có th
 Đây là rà soát do chính nhóm phát triển thực hiện, không phải kiểm thử xâm nhập độc lập.
 
 ## 5.6. Đánh giá chất lượng giải thích AI
-`[CHƯA TRIỂN KHAI]` Thực hiện sau B7 và B10: lấy 50 đến 100 lời giải thích, chấm tay theo rubric (đúng nội dung, dễ hiểu, hữu ích, thang 1 đến 5), so sánh giữa các cấu hình prompt.
+Phương pháp: sinh lời giải thích cho mọi tổ hợp câu hỏi và đáp án sai bằng hai phiên bản prompt, lấy ngẫu nhiên 50 đến 100 mẫu ra CSV, chấm tay theo rubric (đúng nội dung, dễ hiểu, hữu ích, thang 1 đến 5), rồi tính điểm trung bình theo từng phiên bản bằng `npm run ai-eval:score`.
+
+Trạng thái ngày 2026-11-01: mới sinh được 11 trên 60 lời giải thích (10 của prompt v1, 1 của prompt v2) vì gói miễn phí giới hạn 20 lượt gọi mỗi ngày trên một model. Chưa có điểm chấm.
+
+Quan sát định tính, chưa phải kết quả đánh giá: trong các lần thử, mô hình trích đúng dẫn chứng từ đoạn văn, nhưng có một lời giải thích đưa ra suy luận yếu. Điều này cho thấy cần chấm tiêu chí đúng nội dung thay vì chỉ tin vào định dạng hợp lệ.
 
 `[CẦN SỐ LIỆU: bảng điểm trung bình theo từng cấu hình]`
 
@@ -433,9 +461,10 @@ Hệ thống đã có đủ luồng luyện thi cho học viên và công cụ c
 - Chấm điểm một lần, không lộ đáp án trước khi nộp.
 - Thống kê điểm yếu, xu hướng, gợi ý bộ ôn tập theo luật.
 - Thống kê cho giáo viên.
+- Giải thích câu sai bằng Gemini, có cache, giới hạn lượt và phản hồi của người học.
 - Đóng gói Docker và triển khai tại https://luyenthitoeic-delta.vercel.app.
 
-Về kỹ thuật, 184 test tự động đều đạt và độ phủ dòng lệnh backend đạt 93,1%.
+Về kỹ thuật, 235 test tự động đều đạt và độ phủ dòng lệnh backend đạt 94,62%.
 
 ## 6.2. Đóng góp
 - Một phòng thi trực tuyến xử lý đúng các tình huống đồng thời: nộp trùng, hết giờ, mất mạng.
@@ -444,7 +473,8 @@ Về kỹ thuật, 184 test tự động đều đạt và độ phủ dòng l�
 `[CẦN BỔ SUNG: đóng góp về mặt giáo dục sau khi có số liệu thực nghiệm]`
 
 ## 6.3. Hạn chế
-- **Chưa có tính năng AI giải thích đáp án.** Đây là phần được nêu trong tên đề tài. `[CHƯA TRIỂN KHAI]`
+- Chất lượng giải thích của AI chưa có kết quả chấm tay. `[CẦN SỐ LIỆU]`
+- Hệ thống phụ thuộc vào Gemini: dịch vụ có lúc quá tải, và gói miễn phí có hạn mức theo ngày cho toàn hệ thống.
 - Ngân hàng chỉ có 10 câu mẫu tự soạn.
 - Chưa thử nghiệm với người dùng thật. Bản triển khai dùng gói miễn phí nên chưa phù hợp để vận hành lâu dài.
 - Điểm ước lượng là tuyến tính, không tương ứng với điểm TOEIC chính thức.
@@ -454,7 +484,7 @@ Về kỹ thuật, 184 test tự động đều đạt và độ phủ dòng l�
 - Còn các vấn đề bảo mật mức trung bình nêu ở chương 5.
 
 ## 6.4. Hướng phát triển
-1. Hoàn thành giải thích bằng AI và bộ đánh giá chất lượng (B7, B10).
+1. Hoàn tất chấm tay bộ đánh giá AI và cải tiến prompt theo kết quả.
 2. Mở rộng ngân hàng câu hỏi có giấy phép rõ ràng.
 3. Thêm lớp học để giáo viên theo dõi theo nhóm.
 4. Thêm khôi phục mật khẩu và thu hồi token khi đăng xuất.

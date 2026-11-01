@@ -86,4 +86,4 @@ Bản production: https://luyenthitoeic-delta.vercel.app. Chi tiết ở `docs/D
 Dùng bản ổn định mới nhất. Các ngoại lệ hiện tại:
 - TypeScript 6: Nest CLI và typescript-eslint chưa hỗ trợ TS 7.
 - Prisma 7: tag `latest` của gói `prisma` đang là bản rc của Prisma 8.
-- Gemini 3.5 Flash: các bản mới hơn không phản hồi hoặc quá tải khi đo ngày 2026-11-01.
+- Gemini 3.5 Flash-Lite: các bản mới hơn không phản hồi hoặc quá tải khi đo ngày 2026-11-01; gói miễn phí giới hạn 20 lượt mỗi ngày trên `gemini-3.5-flash`.

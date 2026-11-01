@@ -17,7 +17,11 @@ Phần Reading của bài thi TOEIC gồm 100 câu trắc nghiệm làm trong 75
 Viết phần này sau khi có nguồn thật. Nội dung cần làm rõ: vì sao phản hồi ngay sau bài làm giúp người học, và vì sao ôn theo điểm yếu hiệu quả hơn làm đề tràn lan.
 
 ## 2.3. Mô hình ngôn ngữ lớn trong giải thích đáp án
-`[CHƯA TRIỂN KHAI]` Viết khi hoàn thành B7: giới thiệu mô hình ngôn ngữ lớn, cách thiết kế prompt, đầu ra có cấu trúc, rủi ro nội dung sai.
+Mô hình ngôn ngữ lớn là mô hình sinh văn bản từ một đoạn nhập gọi là prompt `[CẦN TRÍCH DẪN]`. Đề tài dùng Google Gemini qua API. Ba khái niệm liên quan trực tiếp tới hệ thống:
+
+- **Thiết kế prompt:** nêu vai trò, nhiệm vụ, giới hạn độ dài và dữ liệu đầu vào. Prompt thay đổi có thể làm chất lượng đầu ra thay đổi, nên hệ thống lưu phiên bản prompt cùng kết quả.
+- **Đầu ra có cấu trúc:** yêu cầu mô hình trả JSON theo schema để ứng dụng xử lý được từng phần.
+- **Rủi ro nội dung sai:** mô hình có thể đưa ra thông tin không chính xác `[CẦN TRÍCH DẪN]`. Vì vậy hệ thống cung cấp sẵn đáp án đúng cho mô hình, ghi rõ nội dung do AI tạo, và thu phản hồi của người học.
 
 ## 2.4. Công nghệ sử dụng
 Phiên bản dưới đây đọc từ `node_modules` của dự án ngày 2026-11-01.
@@ -32,6 +36,7 @@ Phiên bản dưới đây đọc từ `node_modules` của dự án ngày 2026-
 | Cơ sở dữ liệu | PostgreSQL | 18 | Lưu trữ quan hệ |
 | Truy cập dữ liệu | Prisma | 7.10.1 | Schema, migration, truy vấn |
 | Băm mật khẩu | bcrypt | 6.0.0 | Lưu mật khẩu an toàn |
+| AI | Google Gemini | gemini-3.5-flash-lite | Sinh lời giải thích đáp án |
 | Kiểm thử | Vitest, Supertest, Testing Library | 4.1.12 và 5.0.5 | Test đơn vị và tích hợp |
 | Đóng gói | Docker, Docker Compose | | Chạy CSDL và triển khai |
 

@@ -4,7 +4,13 @@ import bcrypt from 'bcrypt';
 import request from 'supertest';
 import { AppModule } from '../src/app.module.js';
 import { configureApp } from '../src/configure-app.js';
-import { Role } from '../src/generated/prisma/client.js';
+import {
+  Difficulty,
+  ExamStatus,
+  type OptionKey,
+  Part,
+  Role,
+} from '../src/generated/prisma/client.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 
 export const PASSWORD = 'mat-khau-test-123';
@@ -24,6 +30,53 @@ export async function resetDatabase(prisma: PrismaService) {
   await prisma.$executeRawUnsafe(
     'TRUNCATE ai_explanations, answers, attempts, exam_questions, exams, questions, passages, topics, users CASCADE',
   );
+}
+
+// Tạo đề đã xuất bản gồm các câu với đáp án cho trước, mỗi câu thuộc một chủ đề
+export async function createExam(
+  context: TestContext,
+  teacherId: string,
+  questions: { topic: string; correctOption: OptionKey; difficulty?: Difficulty }[],
+  durationMinutes = 30,
+) {
+  const created = [];
+  for (const [index, item] of questions.entries()) {
+    const topic = await context.prisma.topic.upsert({
+      where: { name: item.topic },
+      update: {},
+      create: { name: item.topic },
+    });
+    created.push(
+      await context.prisma.question.create({
+        data: {
+          part: Part.PART_5,
+          content: `Câu ${index + 1}`,
+          options: ['a', 'b', 'c', 'd'],
+          correctOption: item.correctOption,
+          difficulty: item.difficulty ?? Difficulty.MEDIUM,
+          explanation: `Giải thích ${index + 1}`,
+          source: 'Test',
+          license: 'Test',
+          topicId: topic.id,
+        },
+      }),
+    );
+  }
+  const exam = await context.prisma.exam.create({
+    data: {
+      title: 'Đề test',
+      status: ExamStatus.PUBLISHED,
+      durationMinutes,
+      createdById: teacherId,
+      questions: {
+        create: created.map((question, index) => ({
+          position: index + 1,
+          questionId: question.id,
+        })),
+      },
+    },
+  });
+  return { exam, questions: created };
 }
 
 let userCounter = 0;

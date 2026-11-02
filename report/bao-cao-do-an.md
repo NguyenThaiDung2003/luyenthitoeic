@@ -476,7 +476,7 @@ Về kỹ thuật, 235 test tự động đều đạt và độ phủ dòng l�
 - Chất lượng giải thích của AI chưa có kết quả chấm tay. `[CẦN SỐ LIỆU]`
 - Hệ thống phụ thuộc vào Gemini: dịch vụ có lúc quá tải, và gói miễn phí có hạn mức theo ngày cho toàn hệ thống.
 - Ngân hàng chỉ có 10 câu mẫu tự soạn.
-- Chưa thử nghiệm với người dùng thật. Bản triển khai dùng gói miễn phí nên chưa phù hợp để vận hành lâu dài.
+- Chưa thử nghiệm với người dùng thật. Bản triển khai dùng gói miễn phí, backend có thể ngủ và khởi động chậm dù đã có lịch gọi định kỳ, nên chưa phù hợp để vận hành lâu dài.
 - Điểm ước lượng là tuyến tính, không tương ứng với điểm TOEIC chính thức.
 - Ngưỡng của thuật toán gợi ý chưa được kiểm chứng.
 - Thống kê giáo viên tính trên toàn bộ học viên vì chưa có khái niệm lớp học.

@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/components/auth-provider";
+import { LoadingMessage, useAuth } from "@/components/auth-provider";
 import { ExamRoom, type Paper } from "@/components/exam-room";
 import { ErrorBanner } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
@@ -37,6 +37,7 @@ export default function AttemptPage() {
       </div>
     );
   }
+  if (loading) return <LoadingMessage />;
   if (!paper) return <p className="p-8 text-on-surface-variant">Đang tải đề thi...</p>;
   return <ExamRoom paper={paper} />;
 }

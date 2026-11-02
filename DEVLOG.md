@@ -1,5 +1,15 @@
 # Nhật ký phát triển
 
+## 2026-11-02: Xử lý khởi động chậm trên production
+
+**Đã làm**
+- Thêm workflow `keep-awake.yml` gọi health mỗi 10 phút để backend Render không ngủ.
+- `AuthProvider` thử lại `/auth/me` khi lỗi mạng hoặc 5xx, và báo máy chủ đang khởi động sau 4 giây.
+
+**Quyết định**
+- Backend đang thức dậy không được coi là chưa đăng nhập, nên chỉ 401 mới kết thúc phiên ngay.
+- Không đổi lệnh khởi động vì chưa đo được phần migrate và seed chiếm bao lâu.
+
 ## 2026-11-01: B7, B10. AI giải thích đáp án và bộ đánh giá
 
 **Đã làm**

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { homePathFor, useAuth } from "@/components/auth-provider";
+import { homePathFor, LoadingMessage, useAuth } from "@/components/auth-provider";
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -12,5 +12,5 @@ export default function Home() {
     if (!loading) router.replace(user ? homePathFor(user.role) : "/login");
   }, [loading, user, router]);
 
-  return <p className="p-8 text-on-surface-variant">Đang tải...</p>;
+  return <LoadingMessage />;
 }

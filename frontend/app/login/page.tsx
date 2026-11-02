@@ -25,7 +25,7 @@ const FEATURES = [
 ];
 
 export default function LoginPage() {
-  const { user, loading } = useAuth();
+  const { user, loading, waking } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -61,7 +61,12 @@ export default function LoginPage() {
           ))}
         </ul>
       </section>
-      <section className="flex items-center justify-center p-6">
+      <section className="flex flex-col items-center justify-center gap-4 p-6">
+        {waking && (
+          <p className="text-body-subtle text-on-surface-variant" role="status">
+            Máy chủ đang khởi động, có thể mất khoảng một phút. Bạn vẫn có thể đăng nhập.
+          </p>
+        )}
         <AuthForm />
       </section>
     </div>

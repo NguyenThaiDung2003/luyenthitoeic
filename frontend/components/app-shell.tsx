@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { homePathFor, type Role, useAuth } from "./auth-provider";
+import { homePathFor, LoadingMessage, type Role, useAuth } from "./auth-provider";
 import { Icon } from "./icon";
 
 const NAV: Record<Role, { href: string; label: string; icon: string }[]> = {
@@ -34,7 +34,7 @@ export function AppShell({ role, children }: { role: Role; children: React.React
   }, [loading, user, role, router]);
 
   if (loading || !user || user.role !== role) {
-    return <p className="p-8 text-on-surface-variant">Đang tải...</p>;
+    return <LoadingMessage />;
   }
 
   const handleLogout = async () => {

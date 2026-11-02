@@ -15,6 +15,7 @@ Có hai phương án. Phương án 1 phù hợp để demo vì không phải qu�
 - Mật khẩu giáo viên xem ở biến `SEED_TEACHER_PASSWORD` trên trang Environment của service Render.
 - Khi đặt biến trên Vercel bằng PowerShell, dùng `vercel env add TEN production --value "giá trị"`. Không truyền qua pipe vì PowerShell làm sai giá trị.
 - Gói miễn phí của Render có giới hạn về ngủ dịch vụ và thời hạn CSDL. Kiểm tra điều khoản hiện tại trước ngày demo.
+- Workflow `keep-awake.yml` gọi `/api/health` mỗi 10 phút để backend không ngủ. Lịch của GitHub có thể trễ nên thỉnh thoảng vẫn có lần khởi động nguội; khi đó frontend tự thử lại và báo máy chủ đang khởi động. GitHub tắt lịch sau 60 ngày repo không có hoạt động. Chạy suốt tháng dùng khoảng 720–744 trong 750 giờ miễn phí, nên không đủ cho service thứ hai trong cùng workspace. Trước ngày demo, chạy tay workflow này và mở trang một lần.
 
 ## 1. Vercel và Render
 
